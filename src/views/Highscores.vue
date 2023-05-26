@@ -1,1 +1,3 @@
-<template>Highscore2</template>
+<template>Test</template>
+
+<script setup></script>
