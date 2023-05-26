@@ -16,10 +16,13 @@ export const useStoreCompetition = defineStore("storeCompetition", {
     return {
       isParticipant: false,
       participants: [],
+      joining: false, // added here
     };
   },
   actions: {
     async init() {
+      this.isParticipant = false;
+      this.participants = [];
       const user = auth.currentUser;
       if (!user) return; // If there's no user (not authenticated), exit
 
@@ -64,7 +67,9 @@ export const useStoreCompetition = defineStore("storeCompetition", {
     },
     async joinCompetition() {
       const user = auth.currentUser;
-      if (!user || this.isParticipant) return; // Exit if user doesn't exist or is already a participant
+      if (!user || this.isParticipant || this.joining) return; // Exit if user doesn't exist or is already a participant or in the process of joining
+
+      this.joining = true;
 
       try {
         await addDoc(collection(db, "participants"), {
@@ -72,11 +77,14 @@ export const useStoreCompetition = defineStore("storeCompetition", {
           displayName: user.displayName,
           joinDate: new Date().toDateString(),
           score: 0, // default score
+          photoURL: user.photoURL,
         });
 
         this.isParticipant = true;
       } catch (e) {
         console.error("Error adding document: ", e);
+      } finally {
+        this.joining = false;
       }
     },
     async quitCompetition() {

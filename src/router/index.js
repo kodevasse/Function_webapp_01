@@ -6,6 +6,7 @@ import { auth } from "@/js/firebase"; // Import auth here
 import HomeView from "../views/HomeView.vue";
 import Login from "../views/Login.vue";
 import Portal from "../views/Portal.vue";
+import Scores from "../views/Scores.vue";
 
 const routes = [
   {
@@ -23,7 +24,11 @@ const routes = [
     name: "portal",
     component: Portal,
   },
-
+  {
+    path: "/scores",
+    name: "scores",
+    component: Scores,
+  },
   {
     path: "/about",
     name: "about",

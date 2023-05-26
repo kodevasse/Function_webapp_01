@@ -32,9 +32,20 @@
           v-for="participant in storeCompetition.participants"
           :key="participant.userId"
         >
-          <p>{{ participant.displayName }}</p>
-          <p>Ble med: {{ participant.joinDate }}</p>
-          <p>Poeng: {{ participant.score }}</p>
+          <div class="flex flex-row items-center space-x-3">
+            <div>
+              <div class="avatar">
+                <div class="w-24 rounded-full">
+                  <img :src="participant.photoURL" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <p>{{ participant.displayName }}</p>
+              <p>Ble med: {{ participant.joinDate }}</p>
+              <p class="text-primary">Poeng: {{ participant.score }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

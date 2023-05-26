@@ -30,7 +30,7 @@
               <span class="badge">New</span>
             </RouterLink>
           </li>
-          <li><RouterLink to="/highscores">Highscore</RouterLink></li>
+          <li><RouterLink to="/scores">Scores</RouterLink></li>
 
           <li><button @click="storeAuth.logoutUser()">Logout</button></li>
         </ul>
