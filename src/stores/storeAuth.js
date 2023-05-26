@@ -47,7 +47,7 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.router.replace("/login");
           //   storeNotes.clearNotes();
           //   storeUsers.clearUsers();
-          storeCompetions.init();
+          storeCompetition.init();
         }
       });
     },
