@@ -3,10 +3,10 @@ import { useStoreAuth } from "@/stores/storeAuth";
 import { auth } from "@/js/firebase"; // Import auth here
 
 // ROUTES
-import HomeView from "@/views/HomeView.vue";
-import Login from "@/views/Login.vue";
-import Portal from "@/views/Portal.vue";
-import HighScores from "@/views/HighScores.vue";
+import HomeView from "../views/HomeView.vue";
+import Login from "../views/Login.vue";
+import Portal from "../views/Portal.vue";
+import HighScores from "../views/HighScores.vue";
 
 const routes = [
   {
