@@ -1,1 +1,1 @@
-<template>Highscore</template>
+<template>Highscore2</template>
