@@ -59,10 +59,6 @@ import { useStoreCompetition } from "@/stores/storeCompetition";
 const storeAuth = useStoreAuth();
 
 const storeCompetition = useStoreCompetition();
-
-onMounted(() => {
-  storeCompetition.init();
-});
 </script>
 
 <style scoped></style>

@@ -25,12 +25,15 @@
           class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
         >
           <li>
-            <RouterLink to="/portal" class="justify-between">
-              Profile
+            <RouterLink
+              to="/portal"
+              class="justify-between animate-pulse text-pink-400"
+            >
+              Meld deg på
               <span class="badge">New</span>
             </RouterLink>
           </li>
-          <li><RouterLink to="/scores">Scores</RouterLink></li>
+          <li><RouterLink to="/scores">Highscore</RouterLink></li>
 
           <li><button @click="storeAuth.logoutUser()">Logout</button></li>
         </ul>

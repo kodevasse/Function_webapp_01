@@ -14,6 +14,7 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { ref, computed } from "vue";
 import router from "@/router";
 import { useStoreCompetition } from "@/stores/storeCompetition";
+import { useStoreDailyActivity } from "@/stores/storeDailyActivity";
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => {
@@ -24,6 +25,7 @@ export const useStoreAuth = defineStore("storeAuth", {
   actions: {
     init() {
       const storeCompetition = useStoreCompetition();
+      const storeDailyActivity = useStoreDailyActivity();
       console.log("init storeAuth");
       onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -32,7 +34,8 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.user.email = user.email;
           this.user.displayName = user.displayName;
           this.user.photoURL = user.photoURL;
-
+          storeCompetition.init();
+          storeDailyActivity.init();
           // No need to push to portal. The router guard in router/index.js will handle redirections.
           // this.router.push("/portal");
 
@@ -47,7 +50,6 @@ export const useStoreAuth = defineStore("storeAuth", {
           this.router.replace("/login");
           //   storeNotes.clearNotes();
           //   storeUsers.clearUsers();
-          storeCompetition.init();
         }
       });
     },
