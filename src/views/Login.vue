@@ -5,16 +5,23 @@
     <h1
       class="font-extrabold text-transparent sm:text-6xl text-3xl bg-clip-text bg-gradient-to-r from-yellow-200 to-emerald-400 -mt-24 sm:mb-12 mb-6"
     >
-      Snorre <span class="text-gray-600">f</span>A<span class="text-gray-600"
-        >t</span
+      Template <span class="text-gray-600"></span>A<span
+        class="text-gray-600"
+      ></span
       ><span
         class="font-extrabold text-transparent sm:text-6xl text-3xl bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400"
-        >burn</span
+        >pp</span
       >
     </h1>
 
+    <ul>
+      <li>Tailwind CSS + DaisyUI</li>
+      <li>Pinia Store and VueUse</li>
+      <li>Firebase and Firebase Functions</li>
+      <li>Goolge Auth</li>
+    </ul>
     <img
-      class="h-24 w-24 rounded-full ring-2 ring-white sm:h-32 sm:w-32 sm:mb-4 hover:animate-spin"
+      class="h-24 w-24 rounded-full ring-2 ring-white mt-6 sm:h-32 sm:w-32 sm:mb-4 hover:animate-spin"
       src="/images/fat.svg"
       alt="Snorrefatburn logo"
     />

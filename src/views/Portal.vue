@@ -9,45 +9,7 @@
       <h2 class="mt-2 text-center text-2xl font-extrabold">
         Velkommen {{ storeAuth.user.displayName }}
       </h2>
-      <div class="space-y-4 mt-6 flex flex-col w-11/12">
-        <!-- Join and Quit buttons -->
-        <button
-          class="btn btn-secondary"
-          @click="storeCompetition.joinCompetition"
-          v-if="!storeCompetition.isParticipant"
-        >
-          BLI MED PÅ KONKURRANSEN🤩
-        </button>
-        <button
-          class="btn btn-error"
-          @click="storeCompetition.quitCompetition"
-          v-if="storeCompetition.isParticipant"
-        >
-          JEG VIL IKKE MER😪
-        </button>
-
-        <!-- Participant list -->
-        <span class="text-primary font-bold">Påmeldte</span>
-        <div
-          v-for="participant in storeCompetition.participants"
-          :key="participant.userId"
-        >
-          <div class="flex flex-row items-center space-x-3">
-            <div>
-              <div class="avatar">
-                <div class="w-24 rounded-full">
-                  <img :src="participant.photoURL" />
-                </div>
-              </div>
-            </div>
-            <div>
-              <p>{{ participant.displayName }}</p>
-              <p>Ble med: {{ participant.joinDate }}</p>
-              <p class="text-primary">Poeng: {{ participant.score }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProfileSettings />
     </div>
   </div>
 </template>
@@ -56,6 +18,7 @@
 import { ref, onMounted } from "vue";
 import { useStoreAuth } from "@/stores/storeAuth";
 import { useStoreCompetition } from "@/stores/storeCompetition";
+import ProfileSettings from "@/components/user/ProfileSettings.vue";
 const storeAuth = useStoreAuth();
 
 const storeCompetition = useStoreCompetition();

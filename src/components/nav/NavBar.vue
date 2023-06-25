@@ -4,11 +4,11 @@
       <h1
         class="font-extrabold text-transparent text-xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
       >
-        Snorre <span class="text-gray-600">f</span>A<span class="text-gray-600"
-          >t</span
+        Template <span class="text-gray-600"></span
+        ><span class="text-gray-600"></span
         ><span
           class="font-extrabold text-transparent text-xl bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400"
-          >burn</span
+          >App 01</span
         >
       </h1>
     </div>
@@ -25,11 +25,8 @@
           class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
         >
           <li>
-            <RouterLink
-              to="/portal"
-              class="justify-between animate-pulse text-pink-400"
-            >
-              Meld deg på
+            <RouterLink to="/portal" class="justify-between text-pink-400">
+              Portal
               <span class="badge">New</span>
             </RouterLink>
           </li>

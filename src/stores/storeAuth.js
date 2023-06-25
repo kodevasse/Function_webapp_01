@@ -10,7 +10,14 @@ import {
 } from "firebase/auth";
 import { auth } from "@/js/firebase";
 import { db } from "@/js/firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { ref, computed } from "vue";
 import router from "@/router";
 import { useStoreCompetition } from "@/stores/storeCompetition";
@@ -20,37 +27,37 @@ export const useStoreAuth = defineStore("storeAuth", {
   state: () => {
     return {
       user: {},
+      loading: true,
     };
   },
   actions: {
     init() {
-      const storeCompetition = useStoreCompetition();
-      const storeDailyActivity = useStoreDailyActivity();
-      console.log("init storeAuth");
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log("user message:", user);
-          this.user.id = user.uid;
-          this.user.email = user.email;
-          this.user.displayName = user.displayName;
-          this.user.photoURL = user.photoURL;
-          storeCompetition.init();
-          storeDailyActivity.init();
-          // No need to push to portal. The router guard in router/index.js will handle redirections.
-          // this.router.push("/portal");
+      return new Promise((resolve) => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            this.user.id = user.uid;
+            this.user.email = user.email;
+            this.user.displayName = user.displayName;
+            this.user.photoURL = user.photoURL;
 
-          //   storeNotes.init();
-          //   storeCounts.init();
-          //   storeTodos.init();
-          //   storeMessages.init();
-          //   storeUsers.init();
-        } else {
-          this.user = {};
-          // If there's no user (not authenticated), redirect to login. This could be handled by router guard too.
-          this.router.replace("/login");
-          //   storeNotes.clearNotes();
-          //   storeUsers.clearUsers();
-        }
+            // Get user profile from Firestore
+            const userRef = doc(db, "users", user.uid);
+            getDoc(userRef).then((docSnapshot) => {
+              if (docSnapshot.exists()) {
+                this.user.favoriteFood = docSnapshot.data().favoriteFood;
+                this.user.age = docSnapshot.data().age;
+              }
+              // Set loading to false after user data has been fetched
+              this.loading = false;
+              resolve(); // resolve the promise when the user data has been loaded
+            });
+          } else {
+            this.user = {};
+            this.loading = false;
+            this.router.replace("/login");
+            resolve(); // resolve the promise if there's no user
+          }
+        });
       });
     },
 
@@ -63,11 +70,15 @@ export const useStoreAuth = defineStore("storeAuth", {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // console.log("user message:", user);
-          // ...
+          // Set user profile in Firestore
+          const userRef = doc(db, "users", user.uid);
+          setDoc(userRef, {
+            favoriteFood: credentials.favoriteFood,
+            age: credentials.age,
+          });
         })
         .catch((error) => {
-          console.log("error messaage", error.message);
+          console.log("error message", error.message);
         });
     },
     claimPoints(productPrice) {
@@ -77,11 +88,28 @@ export const useStoreAuth = defineStore("storeAuth", {
     googleLogin() {
       const provider = new GoogleAuthProvider();
       signInWithPopup(auth, provider)
-        .then((result) => {
+        .then(async (result) => {
           // The signed-in user info.
           const user = result.user;
           console.log("user message:", user);
-          // on sucessful login, redirect to home page
+
+          // Check if this is a new user (i.e. they have just signed up)
+          const userDocRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(userDocRef);
+          if (!docSnap.exists()) {
+            // Create a document for the new user
+            const userProfile = {
+              id: user.uid,
+              email: user.email,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+              favoriteFood: "", // initial value
+              age: 0, // initial value
+            };
+            await setDoc(userDocRef, userProfile);
+          }
+
+          // On successful login, redirect to home page
           this.router.push({ name: "portal" });
           // ...
         })
@@ -131,6 +159,18 @@ export const useStoreAuth = defineStore("storeAuth", {
         })
         .catch((error) => {
           console.log(error.message);
+        });
+    },
+    updateUserProfile(newData) {
+      const userRef = doc(db, "users", this.user.id);
+      updateDoc(userRef, newData)
+        .then(() => {
+          console.log("User profile updated");
+          // Update local state
+          Object.assign(this.user, newData);
+        })
+        .catch((error) => {
+          console.log("Error updating user profile", error);
         });
     },
   },
