@@ -11,6 +11,7 @@
       </h2>
       <ProfileSettings />
     </div>
+    <PriceSelection />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import { ref, onMounted } from "vue";
 import { useStoreAuth } from "@/stores/storeAuth";
 import { useStoreCompetition } from "@/stores/storeCompetition";
 import ProfileSettings from "@/components/user/ProfileSettings.vue";
+import PriceSelection from "@/components/PriceSelection.vue";
 const storeAuth = useStoreAuth();
 
 const storeCompetition = useStoreCompetition();

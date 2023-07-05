@@ -12,11 +12,13 @@
         >
       </h1>
     </div>
-    <div class="flex-none gap-2" v-if="storeAuth.user">
-      <div class="text-sm ml-2">{{ storeAuth.user.displayName }}</div>
+    <div class="flex-none sm:gap-2" v-if="storeAuth.user">
+      <div class="sm:text-sm text-xs ml-2">
+        {{ storeAuth.user.displayName }}
+      </div>
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 h-10 rounded-full">
+          <div class="sm:w-10 sm:h-10 h-8 w-8 rounded-full">
             <img :src="storeAuth.user.photoURL" />
           </div>
         </label>
@@ -26,11 +28,12 @@
         >
           <li>
             <RouterLink to="/portal" class="justify-between text-pink-400">
-              Portal
+              Advance MODE
               <span class="badge">New</span>
             </RouterLink>
           </li>
-          <li><RouterLink to="/scores">Highscore</RouterLink></li>
+          <!-- <li><RouterLink to="/scores">Highscore</RouterLink></li> -->
+          <li><RouterLink to="/account">Account</RouterLink></li>
 
           <li><button @click="storeAuth.logoutUser()">Logout</button></li>
         </ul>

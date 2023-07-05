@@ -1,0 +1,1 @@
+<template>SUCCESSFULLY SUBSCRIBED TO PRO</template>

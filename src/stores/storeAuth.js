@@ -46,6 +46,7 @@ export const useStoreAuth = defineStore("storeAuth", {
               if (docSnapshot.exists()) {
                 this.user.favoriteFood = docSnapshot.data().favoriteFood;
                 this.user.age = docSnapshot.data().age;
+                this.user.selectedOption = docSnapshot.data().selectedOption;
               }
               // Set loading to false after user data has been fetched
               this.loading = false;
@@ -110,7 +111,7 @@ export const useStoreAuth = defineStore("storeAuth", {
           }
 
           // On successful login, redirect to home page
-          this.router.push({ name: "portal" });
+          this.router.push({ name: "account" });
           // ...
         })
         .catch((error) => {

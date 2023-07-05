@@ -7,12 +7,24 @@ import HomeView from "../views/HomeView.vue";
 import Login from "../views/Login.vue";
 import Portal from "../views/Portal.vue";
 import Scores from "../views/Scores.vue";
+import Account from "../views/Account.vue";
+import Success from "../views/Success.vue";
 
 const routes = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/success",
+    name: "success",
+    component: Success,
+  },
+  {
+    path: "/account",
+    name: "account",
+    component: Account,
   },
   {
     path: "/login",
@@ -23,7 +35,11 @@ const routes = [
     path: "/portal",
     name: "portal",
     component: Portal,
+    // meta: {
+    //   requiredAuth: true,
+    // },
   },
+
   {
     path: "/scores",
     name: "scores",

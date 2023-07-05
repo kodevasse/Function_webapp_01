@@ -4,9 +4,9 @@ import { useStoreAuth } from "./stores/storeAuth";
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/nav/NavBar.vue";
 const storeAuth = useStoreAuth();
-onMounted(() => {
-  // ENABLE LATER
-  storeAuth.init();
+onMounted(async () => {
+  // await the init function
+  await storeAuth.init();
 });
 </script>
 
