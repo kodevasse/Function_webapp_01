@@ -92,7 +92,7 @@ const createSub = async () => {
 
   const docRef = await addDoc(collectionRef, {
     price: selectedPrice.value,
-    success_url: window.location.origin,
+    success_url: window.location.origin + "/success",
     cancel_url: window.location.origin,
   });
 
