@@ -1,29 +1,79 @@
-# Firebase_function_webapp_01
+# Vue.js 3 AI SaaS Boilerplate
 
-This template should help get you started developing with Vue 3 in Vite.
+This project is a Vue.js 3 boilerplate for building web applications that use generative AI to create various SaaS platforms. It includes a robust set of features and built-in integrations to help get your SaaS up and running in no time.
 
-## Recommended IDE Setup
+## 🚀 Technology Stack
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+This boilerplate project uses the following technologies:
 
-## Customize configuration
+- **Vue.js 3 Composition API** - The Progressive JavaScript Framework.
+- **Vite** - Next Generation Frontend Tooling
+- **Tailwind CSS + DaisyUI** - A utility-first CSS framework for rapidly building custom user interfaces.
+- **Pinia Store and VueUse** - Used for state management in Vue.
+- **Firebase and Firebase Functions** - For the backend and serverless functions.
+- **Google Auth** - For user authentication.
+- **Stripe Payment** - Integrated solution for payments.
+- **OpenAI API** - Specifically using ChatGPT-4, DALE-E, and Stable Diffusion for various AI features.
+- **Vipps Payment Solution** - Integrated Norwegian payment solution.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## 🎈 Getting Started
 
-## Project Setup
+To get started with this boilerplate, you will need Node.js and npm installed on your machine.
 
-```sh
-npm install
-```
+1. Clone this repository
+    ```sh
+    git clone https://github.com/kodevasse/Function_webapp_01.git
+    cd Function_webapp_01
+    ```
 
-### Compile and Hot-Reload for Development
+2. Install the dependencies
+    ```sh
+    npm install
+    ```
 
-```sh
-npm run dev
-```
+3. Create a `.env` file in the root directory and populate it with your own Firebase and OpenAI keys, Stripe and Vipps credentials:
 
-### Compile and Minify for Production
+    ```sh
+    VUE_APP_FIREBASE_API_KEY=YOUR_API_KEY
+    VUE_APP_FIREBASE_AUTH_DOMAIN=YOUR_AUTH_DOMAIN
+    VUE_APP_FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
+    VUE_APP_FIREBASE_STORAGE_BUCKET=YOUR_STORAGE_BUCKET
+    VUE_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID
+    VUE_APP_FIREBASE_APP_ID=YOUR_APP_ID
+    VUE_APP_FIREBASE_MEASUREMENT_ID=YOUR_MEASUREMENT_ID
+    VUE_APP_OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+    STRIPE_API_KEY=YOUR_STRIPE_API_KEY
+    VIPPS_MERCHANT_SERIAL_NUMBER=YOUR_MERCHANT_SERIAL_NUMBER
+    VIPPS_CLIENT_ID=YOUR_CLIENT_ID
+    VIPPS_CLIENT_SECRET=YOUR_CLIENT_SECRET
+    ```
 
-```sh
-npm run build
-```
+4. Run the application in the development mode
+    ```sh
+    npm run dev - Development
+    npm run build - Production
+    ```
+
+## 🙏 Contributing
+
+We are open to contributions! Please make sure to follow the guidelines below.
+
+- Fork the project
+- Create your feature branch (`git checkout -b feature/YourFeature`)
+- Commit your changes (`git commit -m 'Add some feature'`)
+- Push to the branch (`git push origin feature/YourFeature`)
+- Open a pull request
+
+
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 💬 Contact
+
+If you have any questions, please open an issue or submit a pull request.
+
+## 🎉 Acknowledgments
+
+We want to thank all the contributors and the whole Vue.js and AI community. . Thank you!
+
