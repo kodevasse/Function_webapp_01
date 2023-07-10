@@ -19,9 +19,9 @@ onMounted(async () => {
           <NavBar />
         </nav>
       </div>
+      <SideBar v-if="storeAuth.user.displayName" />
     </header>
-    <div class="flex flex-row">
-      <SideBar class="flex" />
+    <div class="">
       <RouterView />
     </div>
   </div>
