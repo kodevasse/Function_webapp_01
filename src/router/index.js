@@ -9,6 +9,8 @@ import Portal from "../views/Portal.vue";
 import Scores from "../views/Scores.vue";
 import Account from "../views/Account.vue";
 import Success from "../views/Success.vue";
+import Tool from "../views/Tool.vue";
+import Templates from "../views/Templates.vue";
 
 const routes = [
   {
@@ -16,6 +18,8 @@ const routes = [
     name: "home",
     component: HomeView,
   },
+  { path: "/tool", name: "tool", component: Tool },
+  { path: "/templates", name: "templates", component: Templates },
   {
     path: "/success",
     name: "success",
@@ -49,6 +53,11 @@ const routes = [
     path: "/about",
     name: "about",
     component: () => import("../views/AboutView.vue"),
+  },
+  {
+    path: "/templates/:name",
+    name: "template",
+    component: () => import("../views/TemplateView.vue"),
   },
   // {
   //   path: '/about',

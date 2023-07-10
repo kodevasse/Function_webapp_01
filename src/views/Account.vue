@@ -1,9 +1,13 @@
 <template>
-  <h1>Account page!</h1>
+  <div class="flex flex-col w-full items-center h-screen">
+    <h1>Account page!</h1>
 
-  <div v-if="isLoading">Loading account information...</div>
-  <PriceSelection v-else-if="!subscription" />
-  <SubscribedAccount v-else :subscription="subscription" />
+    <div class="flex flex-col items-center" v-if="isLoading">
+      Loading account information...
+    </div>
+    <PriceSelection v-else-if="!subscription" />
+    <SubscribedAccount v-else :subscription="subscription" />
+  </div>
 </template>
 
 <script setup>
