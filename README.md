@@ -1,6 +1,9 @@
+
 # Vue.js 3 AI SaaS Boilerplate
 
-This project is a Vue.js 3 boilerplate for building web applications that use generative AI to create various SaaS platforms. It includes a robust set of features and built-in integrations to help get your SaaS up and running in no time.
+This project is a Vue.js 3 boilerplate for building web applications that use generative AI to create various SaaS platforms. 
+It includes a robust set of features and built-in integrations to help get your SaaS up and running in no time.
+
 
 ## 🚀 Technology Stack
 
@@ -13,8 +16,11 @@ This boilerplate project uses the following technologies:
 - **Firebase and Firebase Functions** - For the backend and serverless functions.
 - **Google Auth** - For user authentication.
 - **Stripe Payment** - Integrated solution for payments.
-- **OpenAI API** - Specifically using ChatGPT-4, DALE-E, and Stable Diffusion for various AI features.
-- **Vipps Payment Solution** - Integrated Norwegian payment solution.
+
+_Coming Soon_:
+- _**OpenAI API** - Specifically using ChatGPT-4, DALE-E, and Stable Diffusion for various AI features._
+- _**Vipps Payment Solution** - Integrated Norwegian payment solution._
+
 
 ## 🎈 Getting Started
 
