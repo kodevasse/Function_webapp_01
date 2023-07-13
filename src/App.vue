@@ -15,7 +15,7 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-row">
-    <NavBarSide class="md:fixed z-10" />
+    <NavBarSide v-if="storeAuth.user.displayName" class="md:fixed z-10" />
 
     <div class="flex flex-col w-full lg:ml-72">
       <NavBar />
@@ -27,7 +27,7 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-  <NavBarBottom class="flex lg:hidden" />
+  <NavBarBottom v-if="storeAuth.user.displayName" class="flex lg:hidden" />
 </template>
 
 <style scoped></style>

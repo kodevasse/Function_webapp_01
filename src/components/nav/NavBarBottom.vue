@@ -1,29 +1,29 @@
-t
 <template>
   <nav
-    class="fixed bottom-0 left-0 w-screen shadow z-40 bg-gray-200 text-gray-800 border-t-2 border-gray-300"
+    class="fixed bottom-0 left-0 w-screen shadow z-40 bg-base-100 text-gray-800 border-t-2 border-gray-300"
   >
     <div class="flex items-center justify-between w-full h-14">
       <button
         @click="globalStore.menuOpen = !globalStore.menuOpen"
         class="text-sm font-semibold tracking-wide grow h-full flex items-center justify-center"
+        :class="{ 'bg-base-200': globalStore.menuOpen }"
       >
         <IconMenu v-if="!globalStore.menuOpen" />
         <IconClose v-else />
       </button>
       <RouterLink
-        to="/dashboard"
+        to="/tool"
         @click="globalStore.menuOpen = false"
-        :class="{ 'btn-active': isDashboardActive }"
-        class="btnlocal text-sm font-semibold tracking-wide grow h-full flex items-center justify-center"
+        :class="{ 'knappen-active': isDashboardActive }"
+        class="knappen text-sm font-semibold tracking-wide grow h-full flex items-center justify-center"
       >
         <IconHome />
       </RouterLink>
       <RouterLink
         to="/templates"
         @click="globalStore.menuOpen = false"
-        :class="{ 'btn-active': isTemplatesActive }"
-        class="btnlocal text-sm font-semibold tracking-wide grow h-full flex items-center justify-center"
+        :class="{ 'knappen-active': isTemplatesActive }"
+        class="knappen text-sm font-semibold tracking-wide grow h-full flex items-center justify-center"
       >
         <IconGrid />
       </RouterLink>
@@ -33,7 +33,7 @@ t
 
 <script setup>
 import { RouterLink, useRouter, useRoute } from "vue-router";
-import { ref, reactive, watchEffect } from "vue";
+import { ref, reactive, watchEffect, computed } from "vue";
 import { useGlobalStore } from "@/stores/globalStore";
 import IconHome from "@/components/icons/IconHome.vue";
 import IconMenu from "@/components/icons/IconMenu.vue";
@@ -42,10 +42,9 @@ import IconClose from "@/components/icons/IconClose.vue";
 
 const globalStore = useGlobalStore();
 
-const router = useRouter();
 const route = useRoute();
-const isDashboardActive = route.path === "/dashboard";
-const isTemplatesActive = route.path === "/templates";
+const isDashboardActive = computed(() => route.path === "/tool");
+const isTemplatesActive = computed(() => route.path === "/templates");
 
 watchEffect(() => {
   route.path;
@@ -56,11 +55,11 @@ watchEffect(() => {
 </script>
 
 <style scoped>
-.btnlocal {
-  @apply bg-white;
+.knappen {
+  @apply bg-base-100;
 }
 
-.btnlocal-active {
-  @apply bg-gray-200;
+.knappen-active {
+  @apply bg-base-200;
 }
 </style>

@@ -1,12 +1,30 @@
 <template>
-  <div class="flex flex-col w-full items-center h-screen">
-    <h1>Account page!</h1>
-
-    <div class="flex flex-col items-center" v-if="isLoading">
-      Loading account information...
+  <div class="flex flex-col">
+    <div class="flex flex-col w-full h-full items-center sm:justify-start mt-6">
+      <div class="card w-full max-w-2xl bg-base-200 shadow-xl">
+        <div class="card-body">
+          <div class="flex flex-col" v-if="isLoading">
+            <span class="loading loading-infinity loading-lg"></span>
+            Loading account information...
+          </div>
+          <PriceSelection v-else-if="!subscription" />
+          <SubscribedAccount v-else :subscription="subscription" />
+        </div>
+        <div class="card-actions justify-end"></div>
+      </div>
     </div>
-    <PriceSelection v-else-if="!subscription" />
-    <SubscribedAccount v-else :subscription="subscription" />
+    <div class="flex flex-col w-full items-center sm:justify-start mt-6 mb-12">
+      <div class="card w-full max-w-2xl bg-base-200 shadow-xl">
+        <div class="card-body">
+          <div class="flex flex-col" v-if="isLoading">
+            <span class="loading loading-infinity loading-lg"></span>
+            Loading account information...
+          </div>
+          <ProfileSettings />
+        </div>
+        <div class="card-actions justify-end"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,6 +32,7 @@
 import { ref, onMounted } from "vue";
 import PriceSelection from "@/components/PriceSelection.vue";
 import SubscribedAccount from "@/components/SubscribedAccount.vue";
+import ProfileSettings from "@/components/user/ProfileSettings.vue";
 import { useStoreAuth } from "@/stores/storeAuth";
 
 const storeAuth = useStoreAuth();

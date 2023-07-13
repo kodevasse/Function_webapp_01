@@ -1,6 +1,6 @@
 <template>
   <div
-    class="navbar fixed lg:flex flex-col justify-start h-screen border-r bg-gray-200 sm:w-[18rem] w-[87%] transition-all duration-200 ease-in-out transform lg:translate-x-0"
+    class="navbar fixed lg:flex flex-col justify-start h-screen border-r bg-base-100 sm:w-[18rem] w-[87%] transition-all duration-200 ease-in-out transform lg:translate-x-0"
     :class="!globalStore.menuOpen && '-translate-x-[42rem] '"
     @click.self
   >
@@ -55,7 +55,7 @@
               <div
                 v-if="showDropdown"
                 ref="dropdown"
-                class="dropdown fixed right-0 z-10 mt-4 sm:w-[14.75rem] w-11/12 mx-auto left-0 origin-top-right rounded-md border-gray-200 border-[0.15rem] bg-gray-100 shadow-lg"
+                class="dropdown fixed right-0 z-10 mt-4 sm:w-[14.75rem] w-11/12 mx-auto left-0 origin-top-right rounded-xl border-gray-200 border-[0.15rem] bg-base-100 shadow-lg"
                 role="menu"
               >
                 <div class="flow-root py-2">
@@ -153,7 +153,7 @@
 
         <!-- END OF DROPWDOWN-->
         <RouterLink
-          to="/dashboard"
+          to="/account"
           class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
         >
           >
@@ -285,7 +285,8 @@
           </summary>
 
           <nav aria-label="Account Nav" class="mt-1.5 ml-8 flex flex-col">
-            <a
+            <RouterLink
+              to="/portal"
               href="#"
               class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
             >
@@ -305,7 +306,7 @@
               </svg>
 
               <span class="ml-3 text-sm font-medium"> Details </span>
-            </a>
+            </RouterLink>
 
             <a
               href="#"
@@ -376,10 +377,11 @@
           <span class="ml-3 text-sm font-medium"> Help </span>
         </a>
       </nav>
-      <div class="sticky inset-x-0 bottom-0 border-t border-gray-100">
-        <a
+      <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 w-full">
+        <RouterLink
+          to="/account"
           href="#"
-          class="flex items-center p-4 bg-gray-200 shrink-0 hover:bg-gray-50 rounded-md"
+          class="flex items-center p-4 shrink-0 hover:bg-gray-50 rounded-md"
         >
           <img
             alt="Man"
@@ -396,7 +398,7 @@
               <span> {{ storeAuth.user.email }} </span>
             </p>
           </div>
-        </a>
+        </RouterLink>
       </div>
     </div>
   </div>
@@ -404,7 +406,7 @@
 
 <script setup>
 import { onMounted, ref, watch, watchEffect } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRoute } from "vue-router";
 import IconLogo01 from "@/components/icons/IconLogo01.vue";
 import { useGlobalStore } from "@/stores/globalStore";
 import { useStoreAuth } from "@/stores/storeAuth";
