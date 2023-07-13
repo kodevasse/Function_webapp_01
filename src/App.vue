@@ -4,6 +4,8 @@ import { useStoreAuth } from "./stores/storeAuth";
 import { RouterLink, RouterView } from "vue-router";
 import NavBar from "./components/nav/NavBar.vue";
 import SideBar from "./components/nav/SideBar.vue";
+import NavBarSide from "@/components/nav/NavBarSide.vue";
+import NavBarBottom from "@/components/nav/NavBarBottom.vue";
 const storeAuth = useStoreAuth();
 onMounted(async () => {
   // await the init function
@@ -12,19 +14,20 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="">
-    <header>
-      <div class="">
-        <nav>
-          <NavBar />
-        </nav>
+  <div class="flex flex-row">
+    <NavBarSide class="md:fixed z-10" />
+
+    <div class="flex flex-col w-full lg:ml-72">
+      <NavBar />
+      <div class="flex flex-col items-center w-full h-full p-4">
+        <div class="w-full space-x-1.5 space-y-1.5 sm:mb-3">
+          <RouterView />
+        </div>
+        <!-- <SideBar v-if="storeAuth.user.displayName" /> -->
       </div>
-      <SideBar v-if="storeAuth.user.displayName" />
-    </header>
-    <div class="">
-      <RouterView />
     </div>
   </div>
+  <NavBarBottom class="flex lg:hidden" />
 </template>
 
 <style scoped></style>

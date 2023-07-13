@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-200 w-56 rounded-box h-full absolute sm:relative">
+  <ul class="menu bg-base-200 w-56 rounded-box h-fit absolute top-0 left-0">
     <li>
       <RouterLink to="/tool">
         <svg
