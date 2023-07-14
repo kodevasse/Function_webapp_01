@@ -3,7 +3,7 @@
     <div class="flex flex-col w-full h-full items-center sm:justify-start mt-6">
       <div class="card w-full max-w-2xl bg-base-200 shadow-xl">
         <div class="card-body">
-          <div class="flex flex-col" v-if="isLoading">
+          <div class="flex flex-col items-center" v-if="isLoading">
             <span class="loading loading-infinity loading-lg"></span>
             Loading account information...
           </div>
@@ -16,7 +16,7 @@
     <div class="flex flex-col w-full items-center sm:justify-start mt-6 mb-12">
       <div class="card w-full max-w-2xl bg-base-200 shadow-xl">
         <div class="card-body">
-          <div class="flex flex-col" v-if="isLoading">
+          <div class="flex flex-col items-center" v-if="isLoading">
             <span class="loading loading-infinity loading-lg"></span>
             Loading account information...
           </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col w-full items-center">
     <!-- Vis brukerinformasjon og legg til inngangsbindinger og knappen for å sende oppdatering -->
-    <div v-if="loading" class="loading">Loading...</div>
+    <div v-if="loading" class="">Loading...</div>
     <div v-else class="w-full flex flex-col">
       <h2 class="font-bold mb-4">User profile</h2>
       <p>ID: {{ user.id }}</p>
@@ -70,7 +70,7 @@
           Option 4
         </button>
       </div>
-      <button class="btn mt-4 btn-accent" @click="updateProfile">
+      <button class="btn mt-4 btn-neutral" @click="updateProfile">
         Update Profile
       </button>
     </div>
