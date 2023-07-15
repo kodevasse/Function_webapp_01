@@ -1,14 +1,14 @@
 <template>
   <body class="min-h-screen w-full">
     <div
-      class="min-h-screen bg-gradient-to-tl from-green-100 to-gray-50 w-full py-16 px-4"
+      class="min-h-screen bg-gradient-to-tl from-primary-300 to-base-100 w-full pt-24 px-4"
     >
       <div class="flex flex-col items-center justify-center">
         <p class="text-2xl font-bold text-gray-900">
           Template Boilerplate Firebase
         </p>
         <div
-          class="bg-white shadow rounded lg:w-1/3 md:w-1/2 w-full p-10 mt-16"
+          class="bg-base-200 shadow rounded-lg lg:w-1/3 md:w-1/2 w-full p-10 mt-16"
         >
           <p
             tabindex="0"
@@ -33,9 +33,10 @@
             @click.prevent="handleGoogleLogin"
             aria-label="Continue with google"
             role="button"
-            class="focus:outline-none hover:bg-gray-100 focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
+            class="focus:outline-none hover:bg-base-200 bg-base-100 focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10"
           >
             <svg
+              v-if="!loadingGoogle"
               width="19"
               height="20"
               viewBox="0 0 19 20"
@@ -59,8 +60,13 @@
                 fill="#EB4335"
               />
             </svg>
+            <span
+              v-if="loadingGoogle"
+              class="loading loading-spinner text-primary"
+            ></span>
             <p class="text-base font-medium ml-4 text-gray-700">
-              Continue with Google
+              <span v-if="loadingGoogle">Loading...</span>
+              <span v-else>Continue with Google</span>
             </p>
           </button>
           <!-- <button
@@ -159,9 +165,8 @@
           <div class="mt-8">
             <button
               disabled
-              role="button"
-              aria-label="create my account"
-              class="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-gray-300 border rounded hover:bg-indigo-600 py-4 w-full"
+              class="btn btn-primary w-full"
+              @click="handleLogin"
             >
               Create my account
             </button>
@@ -173,17 +178,20 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useStoreAuth } from "@/stores/storeAuth";
 
 const storeAuth = useStoreAuth();
 const credentials = ref({ email: "", password: "" });
+const loadingGoogle = ref(false); // added this line
 
 function handleLogin() {
   storeAuth.loginUser(credentials.value);
 }
 
-function handleGoogleLogin() {
-  storeAuth.googleLogin();
+async function handleGoogleLogin() {
+  loadingGoogle.value = true; // start loading
+  await storeAuth.googleLogin();
+  loadingGoogle.value = false; // stop loading when done
 }
 </script>
