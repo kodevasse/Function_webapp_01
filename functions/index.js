@@ -1,23 +1,38 @@
 const functions = require("firebase-functions");
-const admin = require("firebase-admin");
-const Stripe = require("stripe");
-admin.initializeApp();
+const { Configuration, OpenAIApi } = require("openai");
 
-// Replace with your Stripe secret key
-const stripe = new Stripe(
-  "sk_test_51K2ZqAJ0sZs1crdee99X9duec8bTIcAxeqZHBgx3cuNE2DUPjSNWMNzZkSo765DiENM3y4z9UJ5yh5BeX9wvaxpW00vjo5cYxH"
-);
+const configuration = new Configuration({
+  apiKey: "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",
+});
+const openai = new OpenAIApi(configuration);
 
-exports.createStripeCheckoutSession = functions.https.onCall(
-  async (data, context) => {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: data.lineItems, // array of products
-      mode: "payment",
-      success_url: data.successUrl, // client-side URL for successful purchase
-      cancel_url: data.cancelUrl, // client-side URL for cancelled purchase
-    });
+exports.chatGPT4 = functions
+  .region("europe-west2")
+  .https.onCall(async (data, context) => {
+    try {
+      // userPrompt and systemMessage are passed from your Vue.js application
+      const { userPrompt, systemMessage } = data;
 
-    return { sessionId: session.id };
-  }
-);
+      // Call the OpenAI API
+      const response = await openai.createChatCompletion({
+        model: "gpt-4",
+        messages: [
+          { role: "system", content: systemMessage },
+          { role: "user", content: userPrompt },
+        ],
+        temperature: 1,
+        max_tokens: 256,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      console.error(error);
+      throw new functions.https.HttpsError(
+        "internal",
+        "An error occurred while calling the OpenAI API"
+      );
+    }
+  });

@@ -9,6 +9,7 @@ export const useGlobalStore = defineStore({
   state: () => ({
     menuOpen: false,
     search: "",
+    notifications: [],
     // the state of your store
     // ...
   }),
@@ -20,6 +21,17 @@ export const useGlobalStore = defineStore({
   },
   // optional actions
   actions: {
-    // ...
+    addNotification(notification) {
+      this.notifications.push(notification);
+
+      setTimeout(() => {
+        this.removeNotification(notification.id);
+      }, 5000);
+    },
+
+    removeNotification(id) {
+      const index = this.notifications.findIndex((n) => n.id === id);
+      if (index !== -1) this.notifications.splice(index, 1);
+    },
   },
 });

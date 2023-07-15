@@ -6,6 +6,7 @@ import NavBar from "./components/nav/NavBar.vue";
 import SideBar from "./components/nav/SideBar.vue";
 import NavBarSide from "@/components/nav/NavBarSide.vue";
 import NavBarBottom from "@/components/nav/NavBarBottom.vue";
+import Notification from "@/components/Notification.vue";
 const storeAuth = useStoreAuth();
 onMounted(async () => {
   // await the init function
@@ -15,6 +16,7 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-row">
+    <Notification />
     <NavBarSide v-if="storeAuth.user.displayName" class="md:fixed z-10" />
 
     <div class="flex flex-col w-full lg:ml-72">
