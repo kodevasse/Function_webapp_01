@@ -16,7 +16,6 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-row">
-    <Notification />
     <NavBarSide v-if="storeAuth.user.displayName" class="md:fixed z-10" />
 
     <div
@@ -29,7 +28,7 @@ onMounted(async () => {
         :class="!storeAuth.user.displayName ?? 'p-4' | 'p-0'"
       >
         <div class="w-full space-x-1.5 space-y-1.5 sm:mb-3">
-          <RouterView />
+          <RouterView /><Notification />
         </div>
         <!-- <SideBar v-if="storeAuth.user.displayName" /> -->
       </div>

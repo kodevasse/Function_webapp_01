@@ -1,9 +1,9 @@
 <template>
-  <transition-group name="slide" tag="div">
+  <transition-group class="" name="slide" tag="div">
     <div
       v-for="notification in notifications"
       :key="notification.id"
-      :class="`alert bg-red-400 sm:w-1/2 absolute top-16 z-30  right-0 alert-${notification.type}`"
+      :class="`alert bg-pink-400 fixed top-14 right-0 sm:w-1/2 w-full flex flex-row alert-${notification.type}`"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
