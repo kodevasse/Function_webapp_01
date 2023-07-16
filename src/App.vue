@@ -19,8 +19,8 @@ onMounted(async () => {
     <NavBarSide v-if="storeAuth.user.displayName" class="md:fixed z-10" />
 
     <div
-      class="flex flex-col w-full lg:ml-72"
-      :class="!storeAuth.user.displayName && 'lg:ml-0'"
+      class="flex flex-col w-full sm:ml-0"
+      :class="!storeAuth.user.displayName && 'lg:ml-72'"
     >
       <NavBar />
       <div

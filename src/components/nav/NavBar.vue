@@ -28,7 +28,7 @@
                 </RouterLink>
               </li>
 
-              <li><RouterLink to="/account">Account</RouterLink></li>
+              <li><RouterLink to="/Settings">Settings</RouterLink></li>
 
               <li><button @click="storeAuth.logoutUser()">Logout</button></li>
             </ul>

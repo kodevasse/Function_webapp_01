@@ -1,5 +1,5 @@
 <template>
-  <body class="w-full">
+  <div class="w-full">
     <div
       class="bg-gradient-to-tl from-primary-300 to-base-100 w-full pt-16 px-4"
     >
@@ -174,7 +174,7 @@
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <script setup>
