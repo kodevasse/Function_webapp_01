@@ -545,7 +545,7 @@
         </RouterLink>
       </nav>
       <div
-        class="fixed inset-x-0 bottom-0 mb-14 lg:mb-4 xl:mb-0 border-t border-gray-100 w-full"
+        class="absolute inset-x-0 bottom-0 mb-14 lg:mb-4 xl:mb-0 border-t border-gray-100 w-full"
       >
         <RouterLink
           to="/account"
