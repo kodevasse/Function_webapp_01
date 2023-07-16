@@ -20,7 +20,7 @@ onMounted(async () => {
 
     <div
       class="flex flex-col w-full sm:ml-0"
-      :class="!storeAuth.user.displayName && 'lg:ml-72'"
+      :class="storeAuth.user.displayName && 'lg:ml-72'"
     >
       <NavBar />
       <div
