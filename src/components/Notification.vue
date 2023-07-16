@@ -3,7 +3,7 @@
     <div
       v-for="notification in notifications"
       :key="notification.id"
-      :class="`alert bg-pink-400 fixed top-14 right-0 sm:w-1/2 w-full flex flex-row alert-${notification.type}`"
+      :class="`alert bg-pink-400 fixed z-40 top-14 right-0 sm:w-1/2 w-full flex flex-row alert-${notification.type}`"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

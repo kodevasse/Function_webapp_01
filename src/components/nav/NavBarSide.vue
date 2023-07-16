@@ -6,13 +6,13 @@
   >
     <div class="px-1 py-6 flex flex-col w-full items-start h-full">
       <h1
-        class="font-extrabold text-transparent text-xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+        class="font-extrabold text-transparent text-2xl bg-clip-text bg-gradient-to-r from-primary to-secondary"
       >
-        Template <span class="text-gray-600"></span
+        Boilerplate <span class="text-gray-600"></span
         ><span class="text-gray-600"></span
         ><span
           class="font-extrabold text-transparent text-xl bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400"
-          >App 01</span
+          >Vue.js 3</span
         >
       </h1>
 
@@ -21,7 +21,7 @@
 
         <div
           @click.prevent="showDropdown = !showDropdown"
-          class="inline-flex items-stretch rounded-xl border border-gray-300 bg-gray-200 cursor-pointer mb-5"
+          class="inline-flex items-stretch rounded-xl border border-gray-300 bg-gray-200 cursor-pointer mb-5 hidden"
           :class="showDropdown && ' bg-gray-200'"
         >
           <div
@@ -102,7 +102,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-gray-700"
                         role="menuitem"
                       >
                         Personal
@@ -110,7 +110,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-gray-700"
                         role="menuitem"
                       >
                         Work Emails
@@ -118,7 +118,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-gray-700"
                         role="menuitem"
                       >
                         Office stuff
@@ -152,11 +152,31 @@
         </div>
 
         <!-- END OF DROPWDOWN-->
+
         <RouterLink
           to="/tool"
-          class="flex items-center px-4 py-2 text-gray-700 bg-gray-100 rounded-lg"
+          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          active-class="bg-base-200"
         >
+          <div
+            class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+            :class="[$route.path === '/tool' ? 'w-4' : 'w-0']"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-5 h-5 opacity-75"
@@ -176,13 +196,37 @@
               d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             />
           </svg>
-
-          <span class="ml-3 text-sm font-medium"> Dashboard </span>
+          <span
+            ref="textRef"
+            class="transition-all duration-500 ml-3 text-sm font-medium"
+            >Tool</span
+          >
         </RouterLink>
+
         <RouterLink
           to="/templates"
-          class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          active-class="bg-base-200"
         >
+          <div
+            class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+            :class="[$route.path === '/templates' ? 'w-4' : 'w-0']"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-5 h-5 opacity-75"
@@ -198,13 +242,38 @@
             />
           </svg>
 
-          <span class="ml-3 text-sm font-medium"> Templates </span>
+          <span
+            ref="textRef"
+            class="transition-all duration-500 ml-3 text-sm font-medium"
+          >
+            Templates
+          </span>
         </RouterLink>
 
-        <a
-          href="#"
-          class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+        <RouterLink
+          to="/documents"
+          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          active-class="bg-base-200"
         >
+          <div
+            class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+            :class="[$route.path === '/documents' ? 'w-4' : 'w-0']"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-5 h-5 opacity-75"
@@ -220,13 +289,38 @@
             />
           </svg>
 
-          <span class="ml-3 text-sm font-medium"> Documents </span>
-        </a>
+          <span
+            ref="textRef"
+            class="transition-all duration-500 ml-3 text-sm font-medium"
+          >
+            Documents
+          </span>
+        </RouterLink>
 
-        <a
-          href="#"
-          class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+        <RouterLink
+          to="/examples"
+          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          active-class="bg-base-200"
         >
+          <div
+            class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+            :class="[$route.path === '/examples' ? 'w-4' : 'w-0']"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-5 h-5 opacity-75"
@@ -242,13 +336,37 @@
             />
           </svg>
 
-          <span class="ml-3 text-sm font-medium"> Recipes </span>
-        </a>
+          <span
+            ref="textRef"
+            class="transition-all duration-500 ml-3 text-sm font-medium"
+          >
+            Examples
+          </span>
+        </RouterLink>
 
         <details class="group [&_summary::-webkit-details-marker]:hidden">
           <summary
-            class="flex items-center px-4 py-2 text-gray-500 rounded-lg cursor-pointer hover:bg-gray-100 hover:text-gray-700"
+            class="flex items-center px-4 py-2 text-gray-800 rounded-lg cursor-pointer hover:bg-base-200 hover:text-gray-700"
           >
+            <div
+              class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+              :class="[$route.path === '/account' ? 'w-4' : 'w-0']"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-4 h-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 opacity-75"
@@ -286,10 +404,29 @@
 
           <nav aria-label="Account Nav" class="mt-1.5 ml-8 flex flex-col">
             <RouterLink
-              to="/portal"
-              href="#"
-              class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+              to="/account"
+              class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+              active-class="bg-base-200"
             >
+              <div
+                class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+                :class="[$route.path === '/account' ? 'w-4' : 'w-0']"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="w-5 h-5 opacity-75"
@@ -305,12 +442,17 @@
                 />
               </svg>
 
-              <span class="ml-3 text-sm font-medium"> Details </span>
+              <span
+                ref="textRef"
+                class="transition-all duration-500 ml-3 text-sm font-medium"
+              >
+                Subscription
+              </span>
             </RouterLink>
 
-            <a
+            <!-- <a
               href="#"
-              class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+              class="flex items-center px-4 py-2 text-gray-800 rounded-lg hover:bg-base-200 hover:text-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -328,12 +470,12 @@
               </svg>
 
               <span class="ml-3 text-sm font-medium"> Security </span>
-            </a>
+            </a> -->
 
             <div>
               <button
                 @click="storeAuth.logoutUser()"
-                class="flex items-center w-full px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+                class="flex items-center w-full px-4 py-2 text-red-400 rounded-lg hover:bg-red-200 hover:text-gray-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -355,10 +497,30 @@
             </div>
           </nav>
         </details>
-        <a
-          href="#"
-          class="flex items-center px-4 py-2 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700"
+        <RouterLink
+          to="/help"
+          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          active-class="bg-base-200"
         >
+          <div
+            class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+            :class="[$route.path === '/help' ? 'w-4' : 'w-0']"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-5 h-5 opacity-75"
@@ -374,14 +536,21 @@
             />
           </svg>
 
-          <span class="ml-3 text-sm font-medium"> Help </span>
-        </a>
+          <span
+            ref="textRef"
+            class="transition-all duration-500 ml-3 text-sm font-medium"
+          >
+            Help
+          </span>
+        </RouterLink>
       </nav>
-      <div class="sticky inset-x-0 bottom-0 border-t border-gray-100 w-full">
+      <div
+        class="fixed inset-x-0 bottom-0 mb-14 lg:mb-4 xl:mb-0 border-t border-gray-100 w-full"
+      >
         <RouterLink
           to="/account"
           href="#"
-          class="flex items-center p-4 shrink-0 hover:bg-gray-50 rounded-md"
+          class="flex items-center p-4 shrink-0 hover:bg-base-200 rounded-md"
         >
           <img
             alt="Man"
@@ -412,7 +581,7 @@ import { useGlobalStore } from "@/stores/globalStore";
 import { useStoreAuth } from "@/stores/storeAuth";
 import IconAddCircle from "@/components/icons/IconAddCircle.vue";
 import IconArrow from "@/components/icons/IconArrow.vue";
-
+const route = useRoute();
 const storeAuth = useStoreAuth();
 const globalStore = useGlobalStore();
 
@@ -449,6 +618,22 @@ watch(
 //   // Add the click event listener to the document
 //   document.addEventListener("click", closeNavbar);
 // });
+const textRef = ref(null);
+// watch(route, (newRoute, oldRoute) => {
+//   if (newRoute.path === "/tool") {
+//     textRef.value.style.transition = "all 0.5s";
+//     textRef.value.style.marginLeft = "0.7rem";
+//   } else {
+//     textRef.value.style.transition = "all 0.5s";
+//     textRef.value.style.marginLeft = "0.5rem";
+//   }
+// });
+
+// onMounted(() => {
+//   if (route.path === "/tool") {
+//     textRef.value.style.marginLeft = "0.7rem";
+//   }
+// });
 </script>
 
 <style scoped>
@@ -458,10 +643,19 @@ watch(
 /* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 0.1s ease;
+  transition: opacity 0.1s ease-in-out;
 }
 .v-enter-from,
 .v-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

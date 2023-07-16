@@ -121,9 +121,9 @@
             <hr class="w-full bg-gray-400" />
           </div>
           <div>
-            <lable class="text-sm font-medium leading-none text-gray-800">
+            <label class="text-sm font-medium leading-none text-gray-800">
               Email
-            </lable>
+            </label>
             <input
               disabled
               aria-label="enter email adress"
@@ -134,9 +134,9 @@
             />
           </div>
           <div class="mt-6 w-full">
-            <lable class="text-sm font-medium leading-none text-gray-800">
+            <label class="text-sm font-medium leading-none text-gray-800">
               Password
-            </lable>
+            </label>
             <div class="relative flex items-center justify-center">
               <input
                 disabled

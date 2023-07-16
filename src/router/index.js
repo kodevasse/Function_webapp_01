@@ -11,6 +11,10 @@ import Account from "../views/Account.vue";
 import Success from "../views/Success.vue";
 import Tool from "../views/Tool.vue";
 import Templates from "../views/Templates.vue";
+import Documents from "../views/Documents.vue";
+import Examples from "../views/Examples.vue";
+import Help from "../views/Help.vue";
+import Faq from "../views/Faq.vue";
 
 const routes = [
   {
@@ -30,6 +34,22 @@ const routes = [
     name: "account",
     component: Account,
   },
+  {
+    path: "/documents",
+    name: "documents",
+    component: Documents,
+  },
+  {
+    path: "/examples",
+    name: "examples",
+    component: Examples,
+  },
+  {
+    path: "/help",
+    name: "help",
+    component: Help,
+  },
+  { path: "/faq", name: "faq", component: Faq },
   {
     path: "/login",
     name: "login",
