@@ -18,7 +18,10 @@
           />
         </svg>
       </div>
-      <div class="alert alert-warning" v-if="subscription.cancel_at_period_end">
+      <div
+        class="alert alert-warning-content"
+        v-if="subscription.cancel_at_period_end"
+      >
         This subscription will cancel at the end of the period.
       </div>
       <p>

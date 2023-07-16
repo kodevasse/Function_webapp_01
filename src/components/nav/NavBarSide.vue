@@ -25,7 +25,7 @@
           :class="showDropdown && ' bg-gray-200'"
         >
           <div
-            class="rounded-l-md px-4 py-2.5 text-sm w-full text-gray-600 hover:text-gray-700"
+            class="rounded-l-md px-4 py-2.5 text-md w-full text-gray-600 hover:text-gray-700"
           >
             <div class="flex flex-col">
               <span class="font-mono tracking-tight text-xs">PROJECT</span>
@@ -102,7 +102,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-md text-gray-800 hover:bg-gray-50 hover:text-gray-700"
                         role="menuitem"
                       >
                         Personal
@@ -110,7 +110,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-md text-gray-800 hover:bg-gray-50 hover:text-gray-700"
                         role="menuitem"
                       >
                         Work Emails
@@ -118,7 +118,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-800 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-md text-gray-800 hover:bg-gray-50 hover:text-gray-700"
                         role="menuitem"
                       >
                         Office stuff
@@ -127,7 +127,7 @@
 
                     <div class="">
                       <div
-                        class="w-full justify-between flex flex-row gap-2 p-2 pl-6 rounded-lg px-4 text-sm font-bold text-gray-900 hover:bg-gray-200 border-t border-gray-"
+                        class="w-full justify-between flex flex-row gap-2 p-2 pl-6 rounded-lg px-4 text-md font-bold text-gray-900 hover:bg-gray-200 border-t border-gray-"
                         role="menuitem"
                       >
                         See all projects
@@ -136,7 +136,7 @@
                     </div>
                     <div>
                       <button
-                        class="flex w-full items-center gap-1 p-2 border-t rounded-lg px-2 pl-6 text-sm font-bold text-blue-400 hover:bg-gray-200"
+                        class="flex w-full items-center gap-1 p-2 border-t rounded-lg px-2 pl-6 text-md font-bold text-blue-400 hover:bg-gray-200"
                         role="menuitem"
                       >
                         <IconAddCircle class="w-5" />
@@ -198,7 +198,7 @@
           </svg>
           <span
             ref="textRef"
-            class="transition-all duration-500 ml-3 text-sm font-medium"
+            class="transition-all duration-500 ml-3 text-md font-medium"
             >Tool</span
           >
         </RouterLink>
@@ -244,7 +244,7 @@
 
           <span
             ref="textRef"
-            class="transition-all duration-500 ml-3 text-sm font-medium"
+            class="transition-all duration-500 ml-3 text-md font-medium"
           >
             Templates
           </span>
@@ -291,7 +291,7 @@
 
           <span
             ref="textRef"
-            class="transition-all duration-500 ml-3 text-sm font-medium"
+            class="transition-all duration-500 ml-3 text-md font-medium"
           >
             Documents
           </span>
@@ -338,7 +338,7 @@
 
           <span
             ref="textRef"
-            class="transition-all duration-500 ml-3 text-sm font-medium"
+            class="transition-all duration-500 ml-3 text-md font-medium"
           >
             Examples
           </span>
@@ -350,7 +350,9 @@
           >
             <div
               class="flex-shrink-0 transition-all duration-500 overflow-hidden"
-              :class="[$route.path === '/account' ? 'w-4' : 'w-0']"
+              :class="[
+                $route.path === '/subscription' || '/settings' ? 'w-4' : 'w-0',
+              ]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -382,7 +384,7 @@
               />
             </svg>
 
-            <span class="ml-3 text-sm font-medium"> Account </span>
+            <span class="ml-3 text-md font-medium"> Account </span>
 
             <span
               class="ml-auto transition duration-300 shrink-0 group-open:-rotate-180"
@@ -404,13 +406,59 @@
 
           <nav aria-label="Account Nav" class="mt-1.5 ml-8 flex flex-col">
             <RouterLink
-              to="/account"
+              to="/subscription"
               class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
               active-class="bg-base-200"
             >
               <div
                 class="flex-shrink-0 transition-all duration-500 overflow-hidden"
-                :class="[$route.path === '/account' ? 'w-4' : 'w-0']"
+                :class="[$route.path === '/subscription' ? 'w-4' : 'w-0']"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 opacity-75"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                />
+              </svg>
+
+              <span
+                ref="textRef"
+                class="transition-all duration-500 ml-3 text-md font-medium"
+              >
+                Subscription
+              </span>
+            </RouterLink>
+            <RouterLink
+              to="/Settings"
+              class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+              active-class="bg-base-200"
+            >
+              <div
+                class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+                :class="[$route.path === '/Settings' ? 'w-4' : 'w-0']"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -444,9 +492,9 @@
 
               <span
                 ref="textRef"
-                class="transition-all duration-500 ml-3 text-sm font-medium"
+                class="transition-all duration-500 ml-3 text-md font-medium"
               >
-                Subscription
+                User Settings
               </span>
             </RouterLink>
 
@@ -469,7 +517,7 @@
                 />
               </svg>
 
-              <span class="ml-3 text-sm font-medium"> Security </span>
+              <span class="ml-3 text-md font-medium"> Security </span>
             </a> -->
 
             <div>
@@ -492,7 +540,7 @@
                   />
                 </svg>
 
-                <span class="ml-3 text-sm font-medium"> Logout </span>
+                <span class="ml-3 text-md font-medium"> Logout </span>
               </button>
             </div>
           </nav>
@@ -538,17 +586,61 @@
 
           <span
             ref="textRef"
-            class="transition-all duration-500 ml-3 text-sm font-medium"
+            class="transition-all duration-500 ml-3 text-md font-medium"
           >
             Help
           </span>
         </RouterLink>
-      </nav>
-      <div
-        class="absolute inset-x-0 bottom-0 mb-14 lg:mb-4 xl:mb-0 border-t border-gray-100 w-full"
-      >
         <RouterLink
-          to="/account"
+          to="/faq"
+          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          active-class="bg-base-200"
+        >
+          <div
+            class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+            :class="[$route.path === '/faq' ? 'w-4' : 'w-0']"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-5 h-5 opacity-75"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+            />
+          </svg>
+
+          <span
+            ref="textRef"
+            class="transition-all duration-500 ml-3 text-md font-medium"
+          >
+            FAQ
+          </span>
+        </RouterLink>
+      </nav>
+      <div class="border-t border-base-300 w-full mt-20">
+        <RouterLink
+          to="/subscription"
           href="#"
           class="flex items-center p-4 shrink-0 hover:bg-base-200 rounded-md"
         >

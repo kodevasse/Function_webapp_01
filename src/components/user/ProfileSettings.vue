@@ -70,7 +70,11 @@
           Option 4
         </button>
       </div>
-      <button class="btn mt-4 btn-neutral" @click="updateProfile">
+      <button
+        class="btn mt-4 btn-neutral"
+        @click="updateProfile"
+        :disabled="!isFormDirty"
+      >
         Update Profile
       </button>
     </div>
@@ -84,7 +88,41 @@ const storeAuth = useStoreAuth();
 // This will ensure the user data is reactive
 const user = computed(() => storeAuth.user);
 const loading = computed(() => storeAuth.loading);
+let originalUserData = reactive({});
 
+onMounted(() => {
+  originalUserData = { ...storeAuth.user };
+});
+
+watch(
+  () => storeAuth.user,
+  (newVal, oldVal) => {
+    if (JSON.stringify(newVal) !== JSON.stringify(originalUserData)) {
+      isFormDirty.value = true;
+    } else {
+      isFormDirty.value = false;
+    }
+  },
+  { deep: true }
+);
+
+const isFormDirty = ref(false);
+// For success notification
+function triggerSuccessNotification() {
+  globalStore.addNotification({
+    id: Date.now(),
+    type: "success",
+    message: "User data updated successfully!",
+  });
+}
+// For warning notification
+function triggerWarningNotification() {
+  globalStore.addNotification({
+    id: Date.now(),
+    type: "warning",
+    message: "There was an issue updating user data!",
+  });
+}
 // Method to update the selected option
 const updateOption = (option) => {
   storeAuth.user.selectedOption = option;
@@ -98,5 +136,7 @@ const updateProfile = () => {
     selectedOption: storeAuth.user.selectedOption, // Include the selectedOption in the updated data
   };
   storeAuth.updateUserProfile(newData);
+  originalUserData = { ...storeAuth.user };
+  isFormDirty.value = false;
 };
 </script>

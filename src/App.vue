@@ -27,7 +27,7 @@ onMounted(async () => {
         class="flex flex-col items-center w-full h-full"
         :class="!storeAuth.user.displayName ?? 'p-4' | 'p-0'"
       >
-        <div class="w-full space-x-1.5 space-y-1.5 sm:mb-3">
+        <div class="w-11/12 sm:w-full space-x-1.5 space-y-1.5 sm:mb-3">
           <RouterView /><Notification />
         </div>
         <!-- <SideBar v-if="storeAuth.user.displayName" /> -->

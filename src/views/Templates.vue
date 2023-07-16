@@ -2,11 +2,11 @@
   <div class="flex flex-col w-full items-center">
     <div class="flex flex-row">
       <div class="flex flex-col w-full">
-        <div class="flex flex-col items-center w-full h-full p-4">
+        <div class="flex flex-col items-center w-full h-full sm:p-4">
           <div class="w-full space-x-1.5 space-y-1.5 sm:mb-3">
             <button
               v-for="category in catValues2"
-              class="inline-block rounded-full border border-gray-400 px-3 py-1 text-sm font-medium text-gray-800 hover:bg-blue-600 hover:text-white focus:outline-none focus:ring-4"
+              class="inline-block rounded-full border border-base-300 px-3 py-1 text-sm font-medium text-gray-800 hover:bg-secondary hover:text-white focus:outline-none focus:ring-4 ring-primary-content"
               :class="{
                 active: category === activeCategory,
                 inactive: category !== activeCategory,
@@ -190,7 +190,7 @@ onMounted(() => {
 
 <style scoped>
 .active {
-  @apply bg-blue-700 text-white;
+  @apply bg-primary text-white;
 }
 .inactive {
 }

@@ -62,9 +62,26 @@
         </div>
       </div>
       <!-- Test Notification Button -->
-      <button class="btn btn-primary mt-4" @click="triggerNotification">
-        Test Notification
-      </button>
+      <div class="flex flex-row flex-wrap gap-2">
+        <button
+          class="btn btn-success mt-4"
+          @click="triggerSuccessNotification"
+        >
+          Test Success
+        </button>
+        <button class="btn btn-error mt-4" @click="triggerErrorNotification">
+          Test Error
+        </button>
+        <button
+          class="btn btn-warning mt-4"
+          @click="triggerWarningNotification"
+        >
+          Test Warning
+        </button>
+        <button class="btn btn-info mt-4" @click="triggerInfoNotification">
+          Test Info
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -96,7 +113,7 @@ async function chatWithGPT4() {
     // Add the error to the global notifications
     globalStore.addNotification({
       id: Date.now(),
-      type: "error",
+      type: "warning",
       message: "Error chatting with GPT-4: " + err,
     });
   } finally {
@@ -109,6 +126,42 @@ function triggerNotification() {
     id: Date.now(),
     type: "info",
     message: "This is a test notification!",
+  });
+}
+
+// For success notification
+function triggerSuccessNotification() {
+  globalStore.addNotification({
+    id: Date.now(),
+    type: "success",
+    message: "User data updated successfully!",
+  });
+}
+
+// For warning notification
+function triggerWarningNotification() {
+  globalStore.addNotification({
+    id: Date.now(),
+    type: "warning",
+    message: "There was an issue updating user data!",
+  });
+}
+
+// For info notification
+function triggerInfoNotification() {
+  globalStore.addNotification({
+    id: Date.now(),
+    type: "info",
+    message: "This is an info notification!",
+  });
+}
+
+// For error notification
+function triggerErrorNotification() {
+  globalStore.addNotification({
+    id: Date.now(),
+    type: "error",
+    message: "This is an error notification!",
   });
 }
 </script>

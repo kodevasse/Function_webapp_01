@@ -7,7 +7,7 @@ import HomeView from "../views/HomeView.vue";
 import Login from "../views/Login.vue";
 import Portal from "../views/Portal.vue";
 import Scores from "../views/Scores.vue";
-import Account from "../views/Account.vue";
+import Subscription from "../views/Subscription.vue";
 import Success from "../views/Success.vue";
 import Tool from "../views/Tool.vue";
 import Templates from "../views/Templates.vue";
@@ -15,6 +15,7 @@ import Documents from "../views/Documents.vue";
 import Examples from "../views/Examples.vue";
 import Help from "../views/Help.vue";
 import Faq from "../views/Faq.vue";
+import Settings from "../views/Settings.vue";
 
 const routes = [
   {
@@ -30,9 +31,9 @@ const routes = [
     component: Success,
   },
   {
-    path: "/account",
-    name: "account",
-    component: Account,
+    path: "/subscription",
+    name: "subscription",
+    component: Subscription,
   },
   {
     path: "/documents",
@@ -43,6 +44,11 @@ const routes = [
     path: "/examples",
     name: "examples",
     component: Examples,
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings,
   },
   {
     path: "/help",

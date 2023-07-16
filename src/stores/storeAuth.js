@@ -22,6 +22,7 @@ import { ref, computed } from "vue";
 import router from "@/router";
 import { useStoreCompetition } from "@/stores/storeCompetition";
 import { useStoreDailyActivity } from "@/stores/storeDailyActivity";
+import { useGlobalStore } from "@/stores/globalStore";
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => {
@@ -111,7 +112,7 @@ export const useStoreAuth = defineStore("storeAuth", {
           }
 
           // On successful login, redirect to home page
-          this.router.push({ name: "account" });
+          this.router.push({ name: "subscription" });
           // ...
         })
         .catch((error) => {
@@ -162,17 +163,34 @@ export const useStoreAuth = defineStore("storeAuth", {
           console.log(error.message);
         });
     },
-    updateUserProfile(newData) {
-      const userRef = doc(db, "users", this.user.id);
-      updateDoc(userRef, newData)
-        .then(() => {
-          console.log("User profile updated");
-          // Update local state
-          Object.assign(this.user, newData);
-        })
-        .catch((error) => {
-          console.log("Error updating user profile", error);
-        });
+    updateUserProfile: function (newData) {
+      const globalStore = useGlobalStore();
+      return new Promise((resolve, reject) => {
+        const userRef = doc(db, "users", this.user.id);
+        updateDoc(userRef, newData)
+          .then(() => {
+            console.log("User profile updated");
+            // Update local state
+            Object.assign(this.user, newData);
+            // Trigger success notification
+            globalStore.addNotification({
+              id: Date.now(),
+              type: "success",
+              message: "User data updated successfully!",
+            });
+            resolve();
+          })
+          .catch((error) => {
+            console.log("Error updating user profile", error);
+            // Trigger warning notification
+            globalStore.addNotification({
+              id: Date.now(),
+              type: "warning",
+              message: "There was an issue updating user data!",
+            });
+            reject(error);
+          });
+      });
     },
   },
 });
