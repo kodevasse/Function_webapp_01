@@ -1,7 +1,7 @@
 <template>
-  <body class="min-h-screen w-full">
+  <body class="w-full">
     <div
-      class="min-h-screen bg-gradient-to-tl from-primary-300 to-base-100 w-full pt-24 px-4"
+      class="bg-gradient-to-tl from-primary-300 to-base-100 w-full pt-16 px-4"
     >
       <div class="flex flex-col items-center justify-center">
         <p class="text-2xl font-bold text-gray-900">
