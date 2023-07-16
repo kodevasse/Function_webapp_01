@@ -351,7 +351,9 @@
             <div
               class="flex-shrink-0 transition-all duration-500 overflow-hidden"
               :class="[
-                $route.path === '/subscription' || '/settings' ? 'w-4' : 'w-0',
+                $route.path === '/subscription' || $route.path === '/settings'
+                  ? 'w-4'
+                  : 'w-0',
               ]"
             >
               <svg
@@ -452,13 +454,13 @@
               </span>
             </RouterLink>
             <RouterLink
-              to="/Settings"
+              to="/settings"
               class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
               active-class="bg-base-200"
             >
               <div
                 class="flex-shrink-0 transition-all duration-500 overflow-hidden"
-                :class="[$route.path === '/Settings' ? 'w-4' : 'w-0']"
+                :class="[$route.path === '/settings' ? 'w-4' : 'w-0']"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

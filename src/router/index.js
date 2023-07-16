@@ -16,6 +16,8 @@ import Examples from "../views/Examples.vue";
 import Help from "../views/Help.vue";
 import Faq from "../views/Faq.vue";
 import Settings from "../views/Settings.vue";
+import Signup from "../views/Signup.vue";
+import VerifyEmail from "../views/VerifyEmail.vue";
 
 const routes = [
   {
@@ -29,6 +31,11 @@ const routes = [
     path: "/success",
     name: "success",
     component: Success,
+  },
+  {
+    path: "/verify-email",
+    name: "verify-email",
+    component: VerifyEmail,
   },
   {
     path: "/subscription",
@@ -60,6 +67,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: Signup,
   },
   {
     path: "/portal",
@@ -103,10 +115,12 @@ const router = createRouter({
 // navigation guards ENABLE LATER
 router.beforeEach(async (to, from) => {
   const user = auth.currentUser;
-  if (!user && to.name !== "login") {
+  // Allow unauthenticated user to navigate to 'login' and 'signup'
+  if (!user && to.name !== "login" && to.name !== "signup") {
     return { name: "login" };
   }
-  if (user && to.name === "login") {
+  // Prevent authenticated user from navigating to 'login' and 'signup'
+  if (user && (to.name === "login" || to.name === "signup")) {
     return false;
   }
 });

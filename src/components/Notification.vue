@@ -100,6 +100,6 @@ const notifications = globalStore.notifications;
   background-color: skyblue;
 }
 .alert-error {
-  background-color: rgba(255, 30, 30, 0.718);
+  background-color: rgb(255, 87, 87);
 }
 </style>

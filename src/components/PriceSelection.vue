@@ -120,7 +120,7 @@ const createSub = async () => {
   const docRef = await addDoc(collectionRef, {
     price: selectedPrice.value,
     success_url: window.location.origin + "/success",
-    cancel_url: window.location.origin + "/account",
+    cancel_url: window.location.origin + "/subscription",
   });
 
   onSnapshot(docRef, (snap) => {

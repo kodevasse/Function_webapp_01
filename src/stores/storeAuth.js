@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   signInWithEmailAndPassword,
+  sendEmailVerification,
   onAuthStateChanged,
   updateProfile,
   GoogleAuthProvider,
@@ -36,23 +37,35 @@ export const useStoreAuth = defineStore("storeAuth", {
       return new Promise((resolve) => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            this.user.id = user.uid;
-            this.user.email = user.email;
-            this.user.displayName = user.displayName;
-            this.user.photoURL = user.photoURL;
+            // Check if the user has verified their email address
+            if (
+              user.emailVerified ||
+              user.providerData[0].providerId === "google.com"
+            ) {
+              this.user.id = user.uid;
+              this.user.email = user.email;
+              this.user.displayName = user.displayName;
+              this.user.photoURL = user.photoURL;
 
-            // Get user profile from Firestore
-            const userRef = doc(db, "users", user.uid);
-            getDoc(userRef).then((docSnapshot) => {
-              if (docSnapshot.exists()) {
-                this.user.favoriteFood = docSnapshot.data().favoriteFood;
-                this.user.age = docSnapshot.data().age;
-                this.user.selectedOption = docSnapshot.data().selectedOption;
-              }
-              // Set loading to false after user data has been fetched
+              // Get user profile from Firestore
+              const userRef = doc(db, "users", user.uid);
+              getDoc(userRef).then((docSnapshot) => {
+                if (docSnapshot.exists()) {
+                  this.user.favoriteFood = docSnapshot.data().favoriteFood;
+                  this.user.age = docSnapshot.data().age;
+                  this.user.selectedOption = docSnapshot.data().selectedOption;
+                }
+                // Set loading to false after user data has been fetched
+                this.loading = false;
+                resolve(); // resolve the promise when the user data has been loaded
+              });
+            } else {
+              this.user = {};
               this.loading = false;
-              resolve(); // resolve the promise when the user data has been loaded
-            });
+              // Redirect to a route where they are instructed to verify their email
+              this.router.replace("/verify-email");
+              resolve(); // resolve the promise if there's no user
+            }
           } else {
             this.user = {};
             this.loading = false;
@@ -62,8 +75,8 @@ export const useStoreAuth = defineStore("storeAuth", {
         });
       });
     },
-
     registerUser(credentials) {
+      const globalStore = useGlobalStore();
       createUserWithEmailAndPassword(
         auth,
         credentials.email,
@@ -72,17 +85,43 @@ export const useStoreAuth = defineStore("storeAuth", {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+
           // Set user profile in Firestore
           const userRef = doc(db, "users", user.uid);
-          setDoc(userRef, {
+
+          // Generate random user photoURL
+          const photoURL = `https://robohash.org/${credentials.email}`; // Random image URL
+          const displayName = credentials.email; // Set displayName to email initially
+          const userProfile = {
             favoriteFood: credentials.favoriteFood,
             age: credentials.age,
+            photoURL: photoURL,
+            displayName: displayName,
+          };
+
+          setDoc(userRef, userProfile);
+
+          // Now send email verification
+          return sendEmailVerification(auth.currentUser);
+        })
+        .then(() => {
+          globalStore.addNotification({
+            id: Date.now(),
+            type: "success",
+            message: "Verification email sent",
           });
+          console.log("Verification email sent");
         })
         .catch((error) => {
           console.log("error message", error.message);
+          globalStore.addNotification({
+            id: Date.now(),
+            type: "error",
+            message: error.message,
+          });
         });
     },
+
     claimPoints(productPrice) {
       this.user.points -= productPrice;
     },

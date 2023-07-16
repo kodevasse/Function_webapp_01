@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col h-full">
     <div class="flex flex-col w-full h-full items-center sm:justify-start mt-6">
       <!-- First Card -->
       <div class="card w-full max-w-2xl bg-base-200 shadow-xl mb-4">
