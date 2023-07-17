@@ -22,11 +22,11 @@
             <img
               v-if="storeDalle.generatedImageUrl"
               :src="storeDalle.generatedImageUrl"
-              class="mt-2"
+              class="mt-2 rounded-box"
             />
           </div>
 
-          <div class="mt-4 w-full">
+          <!-- <div class="mt-4 w-full">
             <h2 class="text-xl">Your Image Library:</h2>
             <div
               v-for="url in imageLibrary"
@@ -34,6 +34,18 @@
               class="mt-2 flex justify-start w-1/3 bg-red-300"
             >
               <img class="" :src="url" />
+            </div>
+          </div> -->
+          <div class="carousel rounded-box w-full">
+            <div
+              v-for="url in imageLibrary"
+              :key="url"
+              class="carousel-item w-1/2"
+            >
+              <img :src="url" class="w-full" />
+              <button @click="testSaveImage(url)" class="btn btn-primary mt-2">
+                Save Image
+              </button>
             </div>
           </div>
         </div>
@@ -43,10 +55,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStoreDalle } from "@/stores/storeDalle";
 import { createImageFromText } from "@/js/firebase/index";
+import { useRoute, useRouter } from "vue-router";
+import { useStoreAuth } from "@/stores/storeAuth";
 
+const storeAuth = useStoreAuth();
+const route = useRoute();
+const router = useRouter();
 let textPrompt = ref("");
 
 const storeDalle = useStoreDalle();
@@ -62,6 +79,20 @@ const generateImage = async () => {
     storeDalle.setGeneratedImage(imageUrl);
   }
 };
+const saveImage = async (url) => {
+  await storeDalle.saveImage(url);
+};
+const testSaveImage = async () => {
+  await storeDalle.testSaveImage(imageLibrary.value);
+};
+
+onMounted(async () => {
+  if (route.path === "/dalle") {
+    if (storeAuth.user.id) {
+      await storeDalle.fetchUserImages();
+    }
+  }
+});
 
 let generatedImageUrl = computed(() => storeDalle.generatedImageUrl);
 let imageLibrary = computed(() => storeDalle.imageLibrary);
