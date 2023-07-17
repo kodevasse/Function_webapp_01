@@ -65,17 +65,21 @@ const checkEmailVerification = async () => {
   // Refresh the user's auth state
   const user = auth.currentUser;
   await user.reload();
-  // Now we can check if the email was verified
-  if (user.emailVerified) {
-    // Email was verified, redirect the user
-    router.push("/subscription");
-  } else {
-    // Email wasn't verified, notify the user
-    globalStore.addNotification({
-      id: Date.now(),
-      type: "error",
-      message: "Email hasn't been verified yet.",
-    });
-  }
+
+  // Wait for a few seconds before checking email verification status
+  setTimeout(async () => {
+    // Now we can check if the email was verified
+    if (user.emailVerified) {
+      // Email was verified, redirect the user
+      router.push("/subscription");
+    } else {
+      // Email wasn't verified, notify the user
+      globalStore.addNotification({
+        id: Date.now(),
+        type: "error",
+        message: "Email hasn't been verified yet.",
+      });
+    }
+  }, 3000); // Wait for 3 seconds
 };
 </script>
