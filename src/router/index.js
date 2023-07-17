@@ -18,6 +18,7 @@ import Faq from "../views/Faq.vue";
 import Settings from "../views/Settings.vue";
 import Signup from "../views/Signup.vue";
 import VerifyEmail from "../views/VerifyEmail.vue";
+import Dalle from "../views/Dalle.vue";
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
     path: "/documents",
     name: "documents",
     component: Documents,
+  },
+  {
+    path: "/dalle",
+    name: "dalle",
+    component: Dalle,
   },
   {
     path: "/examples",

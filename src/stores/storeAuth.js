@@ -4,6 +4,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   sendEmailVerification,
+  sendPasswordResetEmail,
   onAuthStateChanged,
   updateProfile,
   GoogleAuthProvider,
@@ -220,6 +221,26 @@ export const useStoreAuth = defineStore("storeAuth", {
         })
         .catch((error) => {
           console.log(error.message);
+        });
+    },
+    sendPasswordResetEmail(email) {
+      const globalStore = useGlobalStore();
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          globalStore.addNotification({
+            id: Date.now(),
+            type: "success",
+            message: "Password reset email sent",
+          });
+          console.log("Password reset email sent");
+        })
+        .catch((error) => {
+          console.log("error message", error.message);
+          globalStore.addNotification({
+            id: Date.now(),
+            type: "error",
+            message: error.message,
+          });
         });
     },
     updateUserProfile: function (newData) {

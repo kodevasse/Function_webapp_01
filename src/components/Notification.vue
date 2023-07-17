@@ -3,7 +3,7 @@
     <div
       v-for="notification in notifications"
       :key="notification.id"
-      :class="`alert fixed z-40 top-14 right-0 sm:w-1/2 w-full flex flex-row alert-${notification.type}`"
+      :class="`alert fixed z-40 bottom-24 right-0 sm:w-1/2 w-full flex flex-row alert-${notification.type}`"
     >
       <svg
         v-if="notification.type === 'success'"

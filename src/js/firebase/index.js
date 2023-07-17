@@ -26,5 +26,6 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const functions = getFunctions(app, "europe-west2"); // <-- specify your region here
 const chatGPT4 = httpsCallable(functions, "chatGPT4");
+const createImageFromText = httpsCallable(functions, "createImageFromText");
 
-export { app, db, auth, storage, functions, chatGPT4 };
+export { app, db, auth, storage, functions, chatGPT4, createImageFromText };

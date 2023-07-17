@@ -16,7 +16,9 @@
             aria-label="Login to your account"
             class="text-2xl font-extrabold leading-6 text-gray-800"
           >
-            Login to your account
+            {{
+              !isResetPassword ? "Login to your account" : "Forgot Password?"
+            }}
           </p>
           <p class="text-sm mt-4 font-medium leading-none text-gray-500">
             Dont have account?
@@ -134,7 +136,7 @@
               class="bg-base-100 border rounded-md focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
             />
           </div>
-          <div class="mt-6 w-full">
+          <div class="mt-6 w-full" v-if="!isResetPassword">
             <label class="text-sm font-medium leading-none text-gray-800">
               Password
             </label>
@@ -168,9 +170,22 @@
           </div>
 
           <div class="mt-8">
-            <button class="btn btn-primary w-full" @click="handleLogin">
-              Login
+            <button
+              class="btn btn-primary w-full"
+              :class="isResetPassword && 'btn-success'"
+              @click="handleSubmit"
+            >
+              {{ isResetPassword ? "SUBMIT" : "Login" }}
             </button>
+            <div class="pt-6 w-full flex justify-end">
+              <p
+                class="text-blue-500 text-sm cursor-pointer"
+                href="#"
+                @click="toggleResetPassword"
+              >
+                {{ isResetPassword ? "Login?" : "Forgot Password?" }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -192,7 +207,21 @@ const password = ref("");
 const isLoading = ref(false);
 const errorMsg = ref(null);
 const isSignUp = ref(false); // Add this line
+const isResetPassword = ref(false);
 
+function handleSubmit() {
+  if (isResetPassword.value) {
+    storeAuth.sendPasswordResetEmail(credentials.value.email);
+  } else {
+    handleLogin();
+  }
+}
+function toggleResetPassword() {
+  isResetPassword.value = !isResetPassword.value;
+  // Clear the form
+  credentials.email = "";
+  credentials.password = "";
+}
 // check the password
 const togglePasswordVisibility = () => {
   passwordFieldType.value =
