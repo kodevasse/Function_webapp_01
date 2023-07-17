@@ -24,6 +24,7 @@ import router from "@/router";
 import { useStoreCompetition } from "@/stores/storeCompetition";
 import { useStoreDailyActivity } from "@/stores/storeDailyActivity";
 import { useGlobalStore } from "@/stores/globalStore";
+import { v4 as uuidv4 } from "uuid";
 
 export const useStoreAuth = defineStore("storeAuth", {
   state: () => {
@@ -82,16 +83,21 @@ export const useStoreAuth = defineStore("storeAuth", {
         credentials.email,
         credentials.password
       )
-        .then((userCredential) => {
-          // Signed in
+        .then(async (userCredential) => {
           const user = userCredential.user;
+
+          // Generate random user photoURL
+          const photoURL = `https://robohash.org/${uuidv4()}.png`;
+          const displayName = credentials.email;
+
+          // Update user profile
+          await updateProfile(user, {
+            displayName: displayName,
+            photoURL: photoURL,
+          });
 
           // Set user profile in Firestore
           const userRef = doc(db, "users", user.uid);
-
-          // Generate random user photoURL
-          const photoURL = `https://robohash.org/${credentials.email}`; // Random image URL
-          const displayName = credentials.email; // Set displayName to email initially
           const userProfile = {
             favoriteFood: credentials.favoriteFood,
             age: credentials.age,
@@ -99,7 +105,7 @@ export const useStoreAuth = defineStore("storeAuth", {
             displayName: displayName,
           };
 
-          setDoc(userRef, userProfile);
+          await setDoc(userRef, userProfile);
 
           // Now send email verification
           return sendEmailVerification(auth.currentUser);
@@ -140,7 +146,6 @@ export const useStoreAuth = defineStore("storeAuth", {
           if (!docSnap.exists()) {
             // Create a document for the new user
             const userProfile = {
-              id: user.uid,
               email: user.email,
               displayName: user.displayName,
               photoURL: user.photoURL,
@@ -183,13 +188,21 @@ export const useStoreAuth = defineStore("storeAuth", {
         });
     },
     loginUser(credentials) {
+      const globalStore = useGlobalStore();
       signInWithEmailAndPassword(auth, credentials.email, credentials.password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // console.log("user successfull logged in", user);
+          // On successful login, redirect to home page
+          this.router.push({ name: "subscription" });
+          // ...
         })
         .catch((error) => {
+          globalStore.addNotification({
+            id: Date.now(),
+            type: "error",
+            message: error.message,
+          });
           console.log("error message:", error.message);
         });
     },

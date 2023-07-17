@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 sm:px-4 pt-3 lg:px-4">
     <div class="flex items-center sm:justify-between sm:gap-4">
-      <div v-if="storeAuth.user.displayName" class="navbar bg-base-100">
+      <div v-if="storeAuth.user.id" class="navbar bg-base-100">
         <div class="flex-1">
           <h1 class="font-extrabold text-3xl">
             {{ formattedRoute }} <span class="text-gray-600"></span>

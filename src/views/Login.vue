@@ -115,22 +115,23 @@
           </p>
         </button> -->
           <div class="w-full flex items-center justify-between py-5">
-            <hr class="w-full bg-gray-400" />
-            <p class="text-base font-medium leading-4 px-2.5 text-gray-400">
+            <hr class="w-full bg-gray-800" />
+            <p class="text-base font-medium leading-4 px-2.5 text-gray-800">
               OR
             </p>
-            <hr class="w-full bg-gray-400" />
+            <hr class="w-full bg-gray-800" />
           </div>
           <div>
             <label class="text-sm font-medium leading-none text-gray-800">
               Email
             </label>
             <input
-              aria-label="enter email address"
+              v-model="credentials.email"
+              aria-label="enter email adress"
               role="input"
-              placeholder="email.."
+              placeholder="Enter your email"
               type="email"
-              class="bg-base-100 border rounded-md focus:outline focus:outline-[0.1px] text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              class="bg-base-100 border rounded-md focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
             />
           </div>
           <div class="mt-6 w-full">
@@ -139,13 +140,17 @@
             </label>
             <div class="relative flex items-center justify-center">
               <input
+                v-model="credentials.password"
                 aria-label="enter Password"
                 role="input"
-                placeholder="password.."
-                type="password"
-                class="bg-base-100 border rounded-md focus:outline focus:outline-[0.1px] text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                placeholder="Enter your password"
+                :type="passwordFieldType"
+                class="bg-base-100 border rounded-md focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
               />
-              <div class="absolute right-0 mt-2 mr-3 cursor-pointer">
+              <div
+                class="absolute right-0 mt-2 mr-3 cursor-pointer"
+                @click="togglePasswordVisibility"
+              >
                 <svg
                   width="16"
                   height="16"
@@ -161,6 +166,7 @@
               </div>
             </div>
           </div>
+
           <div class="mt-8">
             <button class="btn btn-primary w-full" @click="handleLogin">
               Login
@@ -173,19 +179,25 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useStoreAuth } from "@/stores/storeAuth";
 import { RouterLink } from "vue-router";
 
 const storeAuth = useStoreAuth();
 const credentials = ref({ email: "", password: "" });
 const loadingGoogle = ref(false); // added this line
-
+const passwordFieldType = ref("password");
 const email = ref("");
 const password = ref("");
 const isLoading = ref(false);
 const errorMsg = ref(null);
 const isSignUp = ref(false); // Add this line
+
+// check the password
+const togglePasswordVisibility = () => {
+  passwordFieldType.value =
+    passwordFieldType.value === "password" ? "text" : "password";
+};
 
 function handleLogin() {
   storeAuth.loginUser(credentials.value);

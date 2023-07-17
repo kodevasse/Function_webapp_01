@@ -169,6 +169,7 @@
             </label>
             <input
               v-model="credentials.email"
+              autocomplete="new-email"
               aria-label="enter email adress"
               role="input"
               placeholder="Enter your email"
@@ -183,6 +184,7 @@
             <div class="relative flex items-center justify-center">
               <input
                 v-model="credentials.password"
+                autocomplete="new-password"
                 aria-label="enter Password"
                 role="input"
                 placeholder="Enter your password"
