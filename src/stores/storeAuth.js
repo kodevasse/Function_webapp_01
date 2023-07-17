@@ -36,41 +36,48 @@ export const useStoreAuth = defineStore("storeAuth", {
   actions: {
     init() {
       return new Promise((resolve) => {
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
           if (user) {
             // Check if the user has verified their email address
             if (
               user.emailVerified ||
               user.providerData[0].providerId === "google.com"
             ) {
-              this.user.id = user.uid;
-              this.user.email = user.email;
-              this.user.displayName = user.displayName;
-              this.user.photoURL = user.photoURL;
+              this.user = {
+                ...this.user,
+                id: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                emailVerified: user.emailVerified,
+              };
 
               // Get user profile from Firestore
               const userRef = doc(db, "users", user.uid);
-              getDoc(userRef).then((docSnapshot) => {
-                if (docSnapshot.exists()) {
-                  this.user.favoriteFood = docSnapshot.data().favoriteFood;
-                  this.user.age = docSnapshot.data().age;
-                  this.user.selectedOption = docSnapshot.data().selectedOption;
-                }
-                // Set loading to false after user data has been fetched
-                this.loading = false;
-                resolve(); // resolve the promise when the user data has been loaded
-              });
+              const docSnapshot = await getDoc(userRef);
+              if (docSnapshot.exists()) {
+                this.user = {
+                  ...this.user,
+                  favoriteFood: docSnapshot.data().favoriteFood,
+                  age: docSnapshot.data().age,
+                  selectedOption: docSnapshot.data().selectedOption,
+                };
+              }
+
+              // Set loading to false after user data has been fetched
+              this.loading = false;
+              resolve(); // resolve the promise when the user data has been loaded
             } else {
               this.user = {};
               this.loading = false;
               // Redirect to a route where they are instructed to verify their email
-              this.router.replace("/verify-email");
+              router.replace("/verify-email");
               resolve(); // resolve the promise if there's no user
             }
           } else {
             this.user = {};
             this.loading = false;
-            this.router.replace("/login");
+            router.replace("/login");
             resolve(); // resolve the promise if there's no user
           }
         });
@@ -92,7 +99,7 @@ export const useStoreAuth = defineStore("storeAuth", {
 
           // Update user profile
           await updateProfile(user, {
-            displayName: displayName,
+            displayName: displayName.slice(0, 5),
             photoURL: photoURL,
           });
 
@@ -102,7 +109,7 @@ export const useStoreAuth = defineStore("storeAuth", {
             favoriteFood: credentials.favoriteFood,
             age: credentials.age,
             photoURL: photoURL,
-            displayName: displayName,
+            displayName: displayName.slice(0, 5),
           };
 
           await setDoc(userRef, userProfile);
@@ -173,7 +180,7 @@ export const useStoreAuth = defineStore("storeAuth", {
 
     updateUser(displayName, photoURL) {
       updateProfile(auth.currentUser, {
-        displayName: displayName,
+        displayName: displayName.slice(0, 5),
         photoURL: `https://robohash.org/${auth.currentUser.uid.slice(20)}.png`,
       })
         .then(() => {
