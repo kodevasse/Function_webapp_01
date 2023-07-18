@@ -47,7 +47,7 @@ To get started with this boilerplate, you will need Node.js and npm installed on
     VUE_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID
     VUE_APP_FIREBASE_APP_ID=YOUR_APP_ID
     VUE_APP_FIREBASE_MEASUREMENT_ID=YOUR_MEASUREMENT_ID
-    VUE_APP_OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+   OPENAI_API_KEY=YOUR_OPENAI_API_KEY
 
     
     _Coming Soon_:
@@ -62,6 +62,11 @@ To get started with this boilerplate, you will need Node.js and npm installed on
     npm run dev - Development
     npm run build - Production
     ```
+5. Firebase functions API key init and deploy
+   ```sh
+   firebase functions:config:set openai.key="your-openai-api-key"
+   firebase deploy --only functions
+   ```
 
 ## 🙏 Contributing
 
