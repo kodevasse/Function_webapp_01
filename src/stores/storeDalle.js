@@ -9,6 +9,7 @@ import {
   setDoc,
   addDoc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "@/js/firebase";
 
@@ -23,67 +24,104 @@ export const useStoreDalle = defineStore({
     async fetchUserImages() {
       const storeAuth = useStoreAuth();
       const userId = storeAuth.user.id;
+
       const userImagesCol = collection(db, `users/${userId}/images`);
-      const userImagesSnapshot = await getDocs(userImagesCol);
-      this.savedImageLibrary = userImagesSnapshot.docs.map(
-        (doc) => doc.data().url
-      );
+
+      let userImagesSnapshot;
+
+      // Check if the images are already saved in local storage
+      const savedImages = localStorage.getItem("userImages");
+      if (savedImages) {
+        this.imageLibrary = JSON.parse(savedImages);
+      } else {
+        // If not in local storage, fetch from Firestore
+        userImagesSnapshot = await getDocs(userImagesCol);
+        this.imageLibrary = [];
+
+        userImagesSnapshot.forEach((doc) => {
+          this.imageLibrary.push({
+            id: doc.id,
+            url: doc.data().url,
+          });
+        });
+
+        // Save the images to local storage
+        localStorage.setItem("userImages", JSON.stringify(this.imageLibrary));
+      }
+
+      console.log("User images fetched");
     },
 
     setGeneratedImage(imageUrl) {
       this.generatedImageUrl = imageUrl;
-      this.addImage(imageUrl);
+      // Check if the image already exists in the imageLibrary
     },
     addImage(imageUrl) {
-      this.imageLibrary.unshift(imageUrl);
+      // Generate a unique ID for the new image
+      const imageId = `${new Date().getTime()}`;
+
+      this.imageLibrary.unshift({
+        id: imageId,
+        url: imageUrl,
+      });
+
       if (this.imageLibrary.length > 10) {
         this.imageLibrary.pop();
       }
     },
 
     async saveImage(imageUrl) {
-      // fetch image blob from url
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-
-      // create a unique file name
-      const fileName = `${new Date().getTime()}.png`;
-
-      // get reference to storage bucket
-      const storageRef = storage.ref();
-      const fileRef = storageRef.child(fileName);
-
-      // upload the image to the bucket
-      const snapshot = await fileRef.put(blob);
-
-      // get the download URL of the uploaded file
-      const uploadedUrl = await snapshot.ref.getDownloadURL();
+      // Check if the image already exists in the user's imageLibrary
+      const imageExists = this.imageLibrary.some(
+        (image) => image.url === imageUrl
+      );
+      if (imageExists) {
+        console.log("Image already saved");
+        return;
+      }
 
       // Add the new image URL to Firestore
       const storeAuth = useStoreAuth();
-      const userId = storeAuth.user.uid;
+      const userId = storeAuth.user.id;
       const userImagesCol = collection(db, `users/${userId}/images`);
-      const newImageDoc = doc(userImagesCol);
 
-      await setDoc(newImageDoc, { url: uploadedUrl });
+      // Generate a unique ID for the new image document
+      const imageId = `${new Date().getTime()}`;
 
-      this.savedImageLibrary.push(uploadedUrl);
+      // Use setDoc instead of addDoc to specify the document ID
+      await setDoc(doc(userImagesCol, imageId), {
+        url: imageUrl,
+        timestamp: new Date(),
+      });
+
+      // Add the new image to the imageLibrary array
+      this.imageLibrary.push({
+        id: imageId,
+        url: imageUrl,
+      });
+
+      // Save the images to local storage
+      localStorage.setItem("userImages", JSON.stringify(this.imageLibrary));
+
+      console.log("Image saved");
     },
-    async testSaveImage(imageLibrary) {
+
+    async deleteImage(image) {
       const storeAuth = useStoreAuth();
       const userId = storeAuth.user.id;
-      const userImagesCollectionRef = collection(db, `users/${userId}/images`);
+      const userImagesDoc = doc(db, `users/${userId}/images/${image.id}`);
 
-      for (let imageUrl of imageLibrary) {
-        const newImage = {
-          url: imageUrl,
-          timestamp: new Date(),
-        };
+      await deleteDoc(userImagesDoc);
 
-        await addDoc(userImagesCollectionRef, newImage);
-      }
+      // Update the local list of saved images
+      this.imageLibrary = this.imageLibrary.filter(
+        (img) => img.id !== image.id
+      );
 
-      console.log("All images in imageLibrary saved to Firestore");
+      // Save the images to local storage
+      localStorage.setItem("userImages", JSON.stringify(this.imageLibrary));
+
+      console.log("Image deleted");
     },
   },
 });
