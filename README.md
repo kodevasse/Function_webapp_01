@@ -16,9 +16,10 @@ This boilerplate project uses the following technologies:
 - **Firebase and Firebase Functions** - For the backend and serverless functions.
 - **Google Auth** - For user authentication.
 - **Stripe Payment** - Integrated solution for payments.
+- _**OpenAI API** - Specifically using ChatGPT-4, DALE-E, and Stable Diffusion for various AI features._
+
 
 _Coming Soon_:
-- _**OpenAI API** - Specifically using ChatGPT-4, DALE-E, and Stable Diffusion for various AI features._
 - _**Vipps Payment Solution** - Integrated Norwegian payment solution._
 
 
@@ -47,11 +48,10 @@ To get started with this boilerplate, you will need Node.js and npm installed on
     VUE_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR_SENDER_ID
     VUE_APP_FIREBASE_APP_ID=YOUR_APP_ID
     VUE_APP_FIREBASE_MEASUREMENT_ID=YOUR_MEASUREMENT_ID
-   OPENAI_API_KEY=YOUR_OPENAI_API_KEY
-
+    OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+    STRIPE_API_KEY=YOUR_STRIPE_API_KEY // please setup in firebase Run payment with stripe
     
     _Coming Soon_:
-    STRIPE_API_KEY=YOUR_STRIPE_API_KEY
     VIPPS_MERCHANT_SERIAL_NUMBER=YOUR_MERCHANT_SERIAL_NUMBER
     VIPPS_CLIENT_ID=YOUR_CLIENT_ID
     VIPPS_CLIENT_SECRET=YOUR_CLIENT_SECRET
