@@ -89,7 +89,7 @@ const notifications = globalStore.notifications;
 }
 
 .alert-success {
-  background-color: rgba(0, 255, 115, 0.59);
+  background-color: rgba(0, 255, 115);
 }
 
 .alert-warning {
