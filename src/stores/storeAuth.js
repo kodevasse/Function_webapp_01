@@ -19,6 +19,8 @@ import {
   getDocs,
   setDoc,
   updateDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { ref, computed } from "vue";
 import router from "@/router";
@@ -32,6 +34,8 @@ export const useStoreAuth = defineStore("storeAuth", {
     return {
       user: {},
       loading: true,
+      isLoading: false,
+      subscription: null, // to store the subscription status
     };
   },
   actions: {
@@ -64,7 +68,8 @@ export const useStoreAuth = defineStore("storeAuth", {
                   selectedOption: docSnapshot.data().selectedOption,
                 };
               }
-
+              // Fetch subscription
+              this.fetchSubscription();
               // Set loading to false after user data has been fetched
               this.loading = false;
               resolve(); // resolve the promise when the user data has been loaded
@@ -272,5 +277,21 @@ export const useStoreAuth = defineStore("storeAuth", {
           });
       });
     },
+    fetchSubscription() {
+      this.isLoading = true;
+
+      const subsRef = collection(db, "users", this.user.id, "subscriptions");
+      const subsQuery = query(
+        subsRef,
+        where("status", "in", ["trialing", "active", "past_due", "unpaid"])
+      );
+
+      getDocs(subsQuery).then((subSnapshot) => {
+        this.subscription =
+          subSnapshot.docs.length > 0 ? subSnapshot.docs[0].data() : null;
+        this.isLoading = false;
+      });
+    },
   },
+  getters: {},
 });

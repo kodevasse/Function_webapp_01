@@ -23,7 +23,7 @@ import Dalle from "../views/Dalle.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "Welcome",
     component: HomeView,
   },
   { path: "/tool", name: "tool", component: Tool },

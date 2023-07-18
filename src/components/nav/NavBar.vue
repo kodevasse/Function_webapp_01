@@ -11,13 +11,13 @@
           <div class="sm:text-sm text-xs ml-2">
             {{ storeAuth.user.displayName }}
           </div>
-          <div class="dropdown dropdown-end">
+          <RouterLink to="/" class="dropdown dropdown-end">
             <div class="btn btn-ghost btn-circle avatar">
               <div class="sm:w-10 sm:h-10 h-8 w-8 rounded-full">
                 <img :src="storeAuth.user.photoURL" />
               </div>
             </div>
-            <ul
+            <!-- <ul
               tabindex="0"
               class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
@@ -28,11 +28,11 @@
                 </RouterLink>
               </li>
 
-              <li><RouterLink to="/Settings">Settings</RouterLink></li>
+         <li><RouterLink to="/Settings">Settings</RouterLink></li> 
 
               <li><button @click="storeAuth.logoutUser()">Logout</button></li>
-            </ul>
-          </div>
+            </ul> -->
+          </RouterLink>
         </div>
       </div>
     </div>
