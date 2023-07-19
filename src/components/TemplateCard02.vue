@@ -8,7 +8,7 @@
   plugins: [require('@tailwindcss/line-clamp')]
 -->
   <router-link
-    class="cursor-pointer hover:outline hover:outline-[0.15rem] outline-gray-300 -outline-offset-1 rounded-lg border-[0.13rem] border-gray-200 p-4 shadow-sm transition hover:shadow-lg sm:p-6"
+    class="cursor-pointer hover:outline hover:outline-[0.15rem] outline-base-300 -outline-offset-1 rounded-lg border-[0.13rem] border-base-200 p-4 shadow-sm transition hover:shadow-lg sm:p-6 bg-base-100 hover:bg-base-200"
     :to="{ name: 'template', params: { name: props.slug() } }"
   >
     <span class="text-3xl">{{ emoji }}</span>
@@ -34,12 +34,12 @@
     </span> -->
 
     <a href="#">
-      <h3 class="mt-0.5 text-lg font-medium text-gray-900">
+      <h3 class="mt-0.5 text-lg font-medium">
         {{ title }}
       </h3>
     </a>
 
-    <p class="mt-2 text-sm leading-relaxed text-gray-500 line-clamp-3">
+    <p class="mt-2 text-sm leading-relaxed text-secondary-content line-clamp-3">
       {{ subtitle }}
     </p>
   </router-link>

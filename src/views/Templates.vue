@@ -6,7 +6,7 @@
           <div class="w-full space-x-1.5 space-y-1.5 sm:mb-3">
             <button
               v-for="category in catValues2"
-              class="inline-block rounded-full border border-base-300 px-3 py-1 text-sm font-medium text-gray-800 hover:bg-secondary hover:text-white focus:outline-none focus:ring-4 ring-primary-content"
+              class="inline-block rounded-full border border-secondary px-3 py-1 text-sm font-medium hover:bg-base-300 focus:outline-none focus:ring-4 ring-secondary ring-opacity-50 transition-colors"
               :class="{
                 active: category === activeCategory,
                 inactive: category !== activeCategory,
@@ -190,7 +190,7 @@ onMounted(() => {
 
 <style scoped>
 .active {
-  @apply bg-primary text-white;
+  @apply bg-secondary;
 }
 .inactive {
 }

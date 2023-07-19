@@ -1,6 +1,6 @@
 <template>
   <div
-    class="navbar fixed lg:flex flex-col justify-start h-screen border-r bg-base-100 sm:w-[18rem] w-[87%] transition-all duration-200 ease-in-out transform lg:translate-x-0"
+    class="navbar fixed lg:flex flex-col justify-start h-screen border-r border-base-200 bg-base-100 sm:w-[18rem] w-[87%] transition-all duration-200 ease-in-out transform lg:translate-x-0"
     :class="!globalStore.menuOpen && '-translate-x-[42rem] '"
     @click.self
   >
@@ -25,7 +25,7 @@
           :class="showDropdown && ' bg-gray-200'"
         >
           <div
-            class="rounded-l-md px-4 py-2.5 text-md w-full text-gray-600 hover:text-gray-700"
+            class="rounded-l-md px-4 py-2.5 text-md w-full text-gray-600 hover:"
           >
             <div class="flex flex-col">
               <span class="font-mono tracking-tight text-xs">PROJECT</span>
@@ -35,7 +35,7 @@
 
           <div class="relative">
             <button
-              class="inline-flex h-full items-center justify-center rounded-r-md border-gray-100 px-2 text-gray-600 hover:text-gray-700"
+              class="inline-flex h-full items-center justify-center rounded-r-md border-gray-100 px-2 text-gray-600 hover:"
             >
               <span class="sr-only">Menu</span>
               <svg
@@ -63,7 +63,7 @@
                     <label class="sr-only" for="search"> Search </label>
 
                     <input
-                      class="h-12 mx-auto sm:w-[14rem] w-[17rem] form-control block px-3 py-1.5 text-base font-normal text-gray-700 bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded-xl transition ease-in-out m-0 focus:text-gray-700 focus:bg-gray-200 focus:border-blue-600 focus:outline-none"
+                      class="h-12 mx-auto sm:w-[14rem] w-[17rem] form-control block px-3 py-1.5 text-base font-normal bg-gray-200 bg-clip-padding border border-solid border-gray-300 rounded-xl transition ease-in-out m-0 focus: focus:bg-gray-200 focus:border-blue-600 focus:outline-none"
                       id="text"
                       type="text"
                       v-model="globalStore.searchProject"
@@ -73,7 +73,7 @@
 
                     <button
                       type="button"
-                      class="absolute top-1/2 right-1 -translate-y-1/2 rounded-md bg-gray-50 p-2 mr-4 text-gray-600 transition hover:text-gray-700"
+                      class="absolute top-1/2 right-1 -translate-y-1/2 rounded-md bg-gray-50 p-2 mr-4 text-gray-600 transition hover:"
                     >
                       <span class="sr-only">Submit Search</span>
                       <svg
@@ -102,7 +102,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-md text-gray-800 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-md hover:bg-gray-50 hover:"
                         role="menuitem"
                       >
                         Personal
@@ -110,7 +110,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-md text-gray-800 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-md hover:bg-gray-50 hover:"
                         role="menuitem"
                       >
                         Work Emails
@@ -118,7 +118,7 @@
 
                       <a
                         href="#"
-                        class="block rounded-lg px-4 py-2 text-md text-gray-800 hover:bg-gray-50 hover:text-gray-700"
+                        class="block rounded-lg px-4 py-2 text-md hover:bg-gray-50 hover:"
                         role="menuitem"
                       >
                         Office stuff
@@ -155,7 +155,7 @@
 
         <RouterLink
           to="/tool"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -204,7 +204,7 @@
         </RouterLink>
         <RouterLink
           to="/dalle"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -250,7 +250,7 @@
 
         <RouterLink
           to="/templates"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -297,7 +297,7 @@
 
         <RouterLink
           to="/documents"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -344,7 +344,7 @@
 
         <RouterLink
           to="/examples"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -391,7 +391,7 @@
 
         <details class="group [&_summary::-webkit-details-marker]:hidden">
           <summary
-            class="flex items-center px-4 py-2 text-gray-800 rounded-lg cursor-pointer hover:bg-base-200 hover:text-gray-700"
+            class="flex items-center px-4 py-2 rounded-lg cursor-pointer hover:bg-base-200 hover:"
           >
             <div
               class="flex-shrink-0 transition-all duration-500 overflow-hidden"
@@ -454,7 +454,7 @@
           <nav aria-label="Account Nav" class="mt-1.5 ml-8 flex flex-col">
             <RouterLink
               to="/subscription"
-              class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
               active-class="bg-base-200"
             >
               <div
@@ -500,7 +500,7 @@
             </RouterLink>
             <RouterLink
               to="/settings"
-              class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
               active-class="bg-base-200"
             >
               <div
@@ -547,7 +547,7 @@
 
             <!-- <a
               href="#"
-              class="flex items-center px-4 py-2 text-gray-800 rounded-lg hover:bg-base-200 hover:text-gray-700"
+              class="flex items-center px-4 py-2  rounded-lg hover:bg-base-200 hover:"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -570,7 +570,7 @@
             <div>
               <button
                 @click="storeAuth.logoutUser()"
-                class="flex items-center w-full px-4 py-2 text-red-400 rounded-lg hover:bg-red-200 hover:text-gray-700"
+                class="flex items-center w-full px-4 py-2 text-red-400 rounded-lg hover:bg-red-700 hover:bg-opacity-30"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -594,7 +594,7 @@
         </details>
         <RouterLink
           to="/help"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -640,7 +640,7 @@
         </RouterLink>
         <RouterLink
           to="/faq"
-          class="flex items-center px-4 py-2 text-gray-700 rounded-lg hover:bg-base-200"
+          class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
           active-class="bg-base-200"
         >
           <div
@@ -685,7 +685,7 @@
           </span>
         </RouterLink>
       </nav>
-      <div class="border-t border-base-300 w-full mt-20">
+      <div class="border-t border-base-200 w-full mt-20">
         <RouterLink
           to="/subscription"
           href="#"
