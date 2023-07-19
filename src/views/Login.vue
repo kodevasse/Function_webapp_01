@@ -133,6 +133,7 @@
             <input
               v-model="credentials.email"
               aria-label="enter email adress"
+              autocomplete="email"
               role="input"
               placeholder="Enter your email"
               type="email"
@@ -145,6 +146,7 @@
               <input
                 v-model="credentials.password"
                 aria-label="enter Password"
+                autocomplete="password"
                 role="input"
                 placeholder="Enter your password"
                 :type="passwordFieldType"
