@@ -1,31 +1,38 @@
 <template>
   <div class="w-full">
     <div
-      class="bg-gradient-to-tl from-primary-300 to-base-100 w-full pt-16 px-4"
+      class="bg-gradient-to-tl from-primary-300 to-base-100 w-full pt-12 px-4"
     >
       <div class="flex flex-col items-center justify-center">
-        <p class="text-2xl font-bold text-gray-900">
-          Template Boilerplate Firebase
-        </p>
+        <h1
+          class="font-extrabold text-transparent text-2xl bg-clip-text bg-gradient-to-r from-primary to-secondary"
+        >
+          Boilerplate <span class="text-gray-600"></span
+          ><span class="text-gray-600"></span
+          ><span
+            class="font-extrabold text-transparent text-xl bg-clip-text bg-gradient-to-r from-yellow-400 to-red-400"
+            >Vue.js 3</span
+          >
+        </h1>
         <div
-          class="bg-base-200 shadow rounded-lg lg:w-1/3 md:w-1/2 w-full p-10 mt-16"
+          class="bg-base-200 shadow rounded-lg lg:w-1/3 md:w-1/2 w-full p-10 mt-8"
         >
           <p
             tabindex="0"
             role="heading"
             aria-label="Login to your account"
-            class="text-2xl font-extrabold leading-6 text-gray-800"
+            class="text-2xl font-extrabold leading-6"
           >
             Signup to an account
           </p>
-          <p class="text-sm mt-4 font-medium leading-none text-gray-500">
+          <p class="text-sm mt-4 font-medium leading-non">
             Already have an account?
             <RouterLink
               to="login"
               tabindex="0"
               role="link"
               aria-label="Sign up here"
-              class="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
+              class="text-sm font-medium leading-none underline cursor-pointer text-secondary"
             >
               Log in here</RouterLink
             >
@@ -65,7 +72,7 @@
               v-if="loadingGoogle"
               class="loading loading-spinner text-primary"
             ></span>
-            <p class="text-base font-medium ml-4 text-gray-700">
+            <p class="text-base font-medium ml-4">
               <span v-if="loadingGoogle">Loading...</span>
               <span v-else>Continue with Google</span>
             </p>
@@ -88,7 +95,7 @@
             />
           </svg>
 
-          <p class="text-base font-medium ml-4 text-gray-700">
+          <p class="text-base font-medium ml-4 ">
             Continue with Github
           </p>
         </button>
@@ -110,19 +117,17 @@
             />
           </svg>
 
-          <p class="text-base font-medium ml-4 text-gray-700">
+          <p class="text-base font-medium ml-4 ">
             Continue with Twitter
           </p>
         </button> -->
           <div class="w-full flex items-center justify-between py-5">
             <hr class="w-full bg-gray-800" />
-            <p class="text-base font-medium leading-4 px-2.5 text-gray-800">
-              OR
-            </p>
+            <p class="text-base font-medium leading-4 px-2.5">OR</p>
             <hr class="w-full bg-gray-800" />
           </div>
           <!-- <div>
-            <label class="text-sm font-medium leading-none text-gray-800">
+            <label class="text-sm font-medium leading-none ">
               Email
             </label>
             <input
@@ -131,11 +136,11 @@
               role="input"
               placeholder="disabled"
               type="email"
-              class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none  py-3 w-full pl-3 mt-2"
             />
           </div>
           <div class="mt-6 w-full">
-            <label class="text-sm font-medium leading-none text-gray-800">
+            <label class="text-sm font-medium leading-none ">
               Password
             </label>
             <div class="relative flex items-center justify-center">
@@ -145,7 +150,7 @@
                 role="input"
                 placeholder="disabled"
                 type="password"
-                class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none  py-3 w-full pl-3 mt-2"
               />
               <div class="absolute right-0 mt-2 mr-3 cursor-pointer">
                 <svg
@@ -164,23 +169,19 @@
             </div>
           </div> -->
           <div>
-            <label class="text-sm font-medium leading-none text-gray-800">
-              Email
-            </label>
+            <label class="text-sm font-medium leading-none"> Email </label>
             <input
               v-model="credentials.email"
-              autocomplete="new-email"
+              autocomplete="email"
               aria-label="enter email adress"
               role="input"
               placeholder="Enter your email"
               type="email"
-              class="bg-base-100 border rounded-md focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              class="bg-base-100 border border-base-200 focus:border-secondary-content rounded-md focus:outline-none text-xs font-medium leading-none py-3 w-full pl-3 mt-2"
             />
           </div>
           <div class="mt-6 w-full">
-            <label class="text-sm font-medium leading-none text-gray-800">
-              Password
-            </label>
+            <label class="text-sm font-medium leading-none"> Password </label>
             <div class="relative flex items-center justify-center">
               <input
                 v-model="credentials.password"
@@ -189,7 +190,7 @@
                 role="input"
                 placeholder="Enter your password"
                 :type="passwordFieldType"
-                class="bg-base-100 border rounded-md focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                class="bg-base-100 border border-base-200 focus:border-secondary-content rounded-md focus:outline-none text-xs font-medium leading-none py-3 w-full pl-3 mt-2"
               />
               <div
                 class="absolute right-0 mt-2 mr-3 cursor-pointer"
@@ -212,7 +213,7 @@
           </div>
           <!-- Add input fields for favoriteFood and age -->
           <!-- <div class="mt-6 w-full">
-            <label class="text-sm font-medium leading-none text-gray-800">
+            <label class="text-sm font-medium leading-none ">
               Favorite Food
             </label>
             <input
@@ -221,11 +222,11 @@
               role="input"
               placeholder="Enter your favorite food"
               type="text"
-              class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none  py-3 w-full pl-3 mt-2"
             />
           </div>
           <div class="mt-6 w-full">
-            <label class="text-sm font-medium leading-none text-gray-800">
+            <label class="text-sm font-medium leading-none ">
               Age
             </label>
             <input
@@ -234,7 +235,7 @@
               role="input"
               placeholder="Enter your age"
               type="number"
-              class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+              class="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none  py-3 w-full pl-3 mt-2"
             />
           </div> -->
           <div class="mt-8">
