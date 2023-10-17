@@ -19,6 +19,7 @@ import Settings from "../views/Settings.vue";
 import Signup from "../views/Signup.vue";
 import VerifyEmail from "../views/VerifyEmail.vue";
 import Dalle from "../views/Dalle.vue";
+import Vipps from "../views/Vipps.vue";
 
 const routes = [
   {
@@ -86,6 +87,11 @@ const routes = [
     // meta: {
     //   requiredAuth: true,
     // },
+  },
+  {
+    path: "/vipps",
+    name: "vipps",
+    component: Vipps,
   },
 
   {
