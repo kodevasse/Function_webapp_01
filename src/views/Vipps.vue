@@ -13,14 +13,12 @@
 
 <script setup>
 import { ref } from "vue";
-import { getFunctions, httpsCallable } from "firebase/functions";
+
+import { createVippsPayment } from "@/js/firebase/index";
 
 const startPayment = async () => {
-  const functions = getFunctions();
-  const initiatePayment = httpsCallable(functions, "createVippsPayment");
-
   try {
-    const response = await initiatePayment({
+    const response = await createVippsPayment({
       amount: 1000, // Amount in øre (10.00 NOK)
       phoneNumber: "4791234567", // Example phone number
       returnUrl: "http://example.com/redirect",
