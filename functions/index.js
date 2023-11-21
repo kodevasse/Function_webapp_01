@@ -1,13 +1,6 @@
 const functions = require("firebase-functions");
 const { Configuration, OpenAIApi } = require("openai");
-
-// const { Storage } = require("@google-cloud/storage");
-// const os = require("os");
-// const path = require("path");
-// const fetch = require("node-fetch");
-// const fs = require("fs").promises;
-
-// const storage = new Storage();
+const axios = require("axios");
 
 let apiKey;
 if (process.env.NODE_ENV === "development") {
@@ -22,7 +15,58 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
+/// VIPPS
+exports.createVippsPayment = functions
+  .region("europe-west2")
+  .https.onCall(async (data, context) => {
+    try {
+      // Your Vipps API credentials
+      const clientId = "41295971-a331-4527-9baa-d9b838b697c7";
+      const clientSecret = "LmG8Q~qiKYyjQP0KmjQM2A7sbTFl-esa6kF41ctU";
+      const subscriptionKey = "7970948dcb3f403ea9cdf020760b0c2c"; // Replace with your actual subscription key
+      const merchantSerialNumber = "318388";
 
+      const accessToken = tokenResponse.data.access_token;
+
+      // Create a payment
+      const paymentResponse = await axios.post(
+        "https://apitest.vipps.no/epayment/v1/payments",
+        {
+          amount: {
+            currency: "NOK",
+            value: data.amount,
+          },
+          paymentMethod: {
+            type: "WALLET",
+          },
+          customer: {
+            phoneNumber: data.phoneNumber,
+          },
+          reference: "acme-shop-123-order123abc",
+          returnUrl: data.returnUrl,
+          userFlow: "WEB_REDIRECT",
+          paymentDescription: "One pair of socks",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Ocp-Apim-Subscription-Key": subscriptionKey,
+            "Merchant-Serial-Number": merchantSerialNumber,
+            "Content-Type": "application/json",
+            // Additional headers as required
+          },
+        }
+      );
+
+      return { paymentUrl: paymentResponse.data.url };
+    } catch (error) {
+      console.error("Error creating Vipps payment:", error);
+      throw new functions.https.HttpsError(
+        "internal",
+        "Failed to create Vipps payment"
+      );
+    }
+  });
 exports.chatGPT4 = functions
   .region("europe-west2")
   .https.onCall(async (data, context) => {

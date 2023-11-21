@@ -4,25 +4,33 @@
       <!-- First Card -->
       <div class="card w-full max-w-2xl bg-base-200 shadow-xl mb-4">
         <div class="card-body">
-          Vipps
-          <!-- <button
-                :class="['btn', loading ? 'btn-loading' : 'btn-primary']"
-                :disabled="loading"
-                @click="chatWithGPT4"
-              >
-                <span v-if="loading" class="loading loading-spinner"></span>
-                <span v-if="loading">Processing...</span>
-                <span v-else>Test GPT-4 Chat</span>
-              </button>
-              <p class="flex justify-center mt-6" v-if="loading">
-                
-              </p>
-              <p class="font-bold mt-4" v-else-if="error">Error: {{ error }}</p>
-              <p class="font-bold mt-4" v-else>
-                Response: <br /><span class="font-normal">{{ response }} </span>
-              </p> -->
+          <button @click="startPayment">Pay with Vipps</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { getFunctions, httpsCallable } from "firebase/functions";
+
+const startPayment = async () => {
+  const functions = getFunctions();
+  const initiatePayment = httpsCallable(functions, "createVippsPayment");
+
+  try {
+    const response = await initiatePayment({
+      amount: 1000, // Amount in øre (10.00 NOK)
+      phoneNumber: "4791234567", // Example phone number
+      returnUrl: "http://example.com/redirect",
+    });
+
+    if (response.data.paymentUrl) {
+      window.location.href = response.data.paymentUrl;
+    }
+  } catch (error) {
+    console.error("Error initiating payment:", error);
+  }
+};
+</script>

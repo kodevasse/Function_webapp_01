@@ -396,7 +396,9 @@
             <div
               class="flex-shrink-0 transition-all duration-500 overflow-hidden"
               :class="[
-                $route.path === '/subscription' || $route.path === '/settings'
+                $route.path === '/subscription' ||
+                $route.path === '/settings' ||
+                $route.path === '/vipps'
                   ? 'w-4'
                   : 'w-0',
               ]"
@@ -452,6 +454,52 @@
           </summary>
 
           <nav aria-label="Account Nav" class="mt-1.5 ml-8 flex flex-col">
+            <RouterLink
+              to="/vipps"
+              class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"
+              active-class="bg-base-200"
+            >
+              <div
+                class="flex-shrink-0 transition-all duration-500 overflow-hidden"
+                :class="[$route.path === '/vipps' ? 'w-4' : 'w-0']"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-4 h-4"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-5 h-5 opacity-75"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                />
+              </svg>
+
+              <span
+                ref="textRef"
+                class="transition-all duration-500 ml-3 text-md font-medium"
+              >
+                Vipps
+              </span>
+            </RouterLink>
             <RouterLink
               to="/subscription"
               class="flex items-center px-4 py-2 rounded-lg hover:bg-base-200"

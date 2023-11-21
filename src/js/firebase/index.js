@@ -27,5 +27,15 @@ const storage = getStorage(app);
 const functions = getFunctions(app, "europe-west2"); // <-- specify your region here
 const chatGPT4 = httpsCallable(functions, "chatGPT4");
 const createImageFromText = httpsCallable(functions, "createImageFromText");
+const createVippsPayment = httpsCallable(functions, "createVippsPayment");
 
-export { app, db, auth, storage, functions, chatGPT4, createImageFromText };
+export {
+  app,
+  db,
+  auth,
+  storage,
+  functions,
+  chatGPT4,
+  createImageFromText,
+  createVippsPayment,
+};
