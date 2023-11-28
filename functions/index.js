@@ -1,6 +1,9 @@
 const functions = require("firebase-functions");
 const { Configuration, OpenAIApi } = require("openai");
 const axios = require("axios");
+const Vipps = require("@vippsno/vipps-sdk").default;
+
+const { v4: uuidv4 } = require("uuid");
 
 let apiKey;
 if (process.env.NODE_ENV === "development") {
@@ -16,57 +19,162 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 /// VIPPS
-exports.createVippsPayment = functions
+exports.createVippsPaymentSession = functions
   .region("europe-west2")
   .https.onCall(async (data, context) => {
+    const accessTokenUrl = "https://apitest.vipps.no/accesstoken/get";
+    const paymentUrl = "https://apitest.vipps.no/epayment/v1/payments";
+    const clientId = "41295971-a331-4527-9baa-d9b838b697c7";
+    const clientSecret = "LmG8Q~qiKYyjQP0KmjQM2A7sbTFl-esa6kF41ctU";
+    const subscriptionKey = "7970948dcb3f403ea9cdf020760b0c2c";
+    const merchantSerialNumber = "318388";
+
     try {
-      // Your Vipps API credentials
-      const clientId = "41295971-a331-4527-9baa-d9b838b697c7";
-      const clientSecret = "LmG8Q~qiKYyjQP0KmjQM2A7sbTFl-esa6kF41ctU";
-      const subscriptionKey = "7970948dcb3f403ea9cdf020760b0c2c"; // Replace with your actual subscription key
-      const merchantSerialNumber = "318388";
-
-      const accessToken = tokenResponse.data.access_token;
-
-      // Create a payment
-      const paymentResponse = await axios.post(
-        "https://apitest.vipps.no/epayment/v1/payments",
-        {
-          amount: {
-            currency: "NOK",
-            value: data.amount,
-          },
-          paymentMethod: {
-            type: "WALLET",
-          },
-          customer: {
-            phoneNumber: data.phoneNumber,
-          },
-          reference: "acme-shop-123-order123abc",
-          returnUrl: data.returnUrl,
-          userFlow: "WEB_REDIRECT",
-          paymentDescription: "One pair of socks",
-        },
+      // Step 1: Retrieve Access Token
+      const tokenResponse = await axios.post(
+        accessTokenUrl,
+        {},
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            client_id: clientId,
+            client_secret: clientSecret,
             "Ocp-Apim-Subscription-Key": subscriptionKey,
             "Merchant-Serial-Number": merchantSerialNumber,
-            "Content-Type": "application/json",
-            // Additional headers as required
           },
         }
       );
+      const accessToken = tokenResponse.data.access_token;
 
-      return { paymentUrl: paymentResponse.data.url };
+      // Step 2: Create Payment
+      const idempotencyKey = uuidv4(); // Generate a unique UUID
+      const paymentRequest = {
+        amount: {
+          value: data.amount, // Assuming amount is passed in the request body
+          currency: "NOK", // Set your currency
+        },
+        reference: "your-unique-reference", // Set your reference
+        userFlow: "WEB_REDIRECT", // Assuming web redirect flow
+        // Add other fields as necessary
+      };
+
+      const paymentResponse = await axios.post(paymentUrl, paymentRequest, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Idempotency-Key": idempotencyKey,
+          "Ocp-Apim-Subscription-Key": subscriptionKey,
+          "Merchant-Serial-Number": merchantSerialNumber,
+          // Add other headers as necessary
+        },
+      });
+
+      // Send payment response back to the client
+      return { paymentUrl: paymentResponse.data.paymentUrl };
     } catch (error) {
-      console.error("Error creating Vipps payment:", error);
+      // Proper error handling for callable functions
       throw new functions.https.HttpsError(
-        "internal",
-        "Failed to create Vipps payment"
+        "unknown",
+        "Error in payment process",
+        error
       );
     }
   });
+// exports.createVippsPaymentSession = functions
+//   .region("europe-west2")
+//   .https.onCall(async (data, context) => {
+//     const vipps = new Vipps({
+//       pluginName: "YourPluginName",
+//       pluginVersion: "1.0.0",
+//       clientId: "41295971-a331-4527-9baa-d9b838b697c7",
+//       clientSecret: "LmG8Q~qiKYyjQP0KmjQM2A7sbTFl-esa6kF41ctU",
+//       subscriptionKey: "7970948dcb3f403ea9cdf020760b0c2c",
+//       merchantSerialNumber: "318388",
+//     });
+
+//     try {
+//       const vippsCheckoutSession = await vipps.checkout.createSession({
+//         merchantInfo: {
+//           callbackUrl: "https://example.com/vipps/payment-callback",
+//           returnUrl: "https://example.com/vipps",
+//           callbackAuthorizationToken: "YOUR_CALLBACK_AUTH_TOKEN",
+//         },
+//         transaction: {
+//           amount: {
+//             currency: "NOK",
+//             value: data.amount, // Amount in øre
+//           },
+//           reference: data.reference, // e.g., 'order-id-123'
+//         },
+//         logistics: {
+//           // Add logistics details here if necessary
+//         },
+//       });
+
+//       return { success: true, session: vippsCheckoutSession };
+//     } catch (error) {
+//       console.error("Error creating Vipps payment session:", error);
+//       return { success: false, error: error.message };
+//     }
+//   });
+
+// exports.createVippsPayment = functions
+//   .region("europe-west2")
+//   .https.onCall(async (data, context) => {
+//     // Your Vipps API credentials
+//     const clientId = "41295971-a331-4527-9baa-d9b838b697c7";
+//     const clientSecret = "LmG8Q~qiKYyjQP0KmjQM2A7sbTFl-esa6kF41ctU";
+//     const subscriptionKey = "7970948dcb3f403ea9cdf020760b0c2c"; // Replace with your actual subscription key
+//     const merchantSerialNumber = "318388";
+//     try {
+//       // Get Vipps Access Token
+//       const tokenResponse = await axios.post(
+//         "https://apitest.vipps.no/accessToken/get",
+//         {
+//           client_id: clientId,
+//           client_secret: clientSecret,
+//           Ocp_Apim_Subscription_Key: subscriptionKey,
+//         }
+//       );
+//       const accessToken = tokenResponse.data.access_token;
+
+//       // Create a payment
+//       const paymentResponse = await axios.post(
+//         "https://apitest.vipps.no/epayment/v1/payments",
+//         {
+//           amount: {
+//             currency: "NOK",
+//             value: data.amount,
+//           },
+//           paymentMethod: {
+//             type: "WALLET",
+//           },
+//           customer: {
+//             phoneNumber: data.phoneNumber,
+//           },
+//           reference: "acme-shop-123-order123abc",
+//           returnUrl: data.returnUrl,
+//           userFlow: "WEB_REDIRECT",
+//           paymentDescription: "One pair of socks",
+//         },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${accessToken}`,
+//             "Ocp-Apim-Subscription-Key": subscriptionKey,
+//             "Merchant-Serial-Number": merchantSerialNumber,
+//             "Content-Type": "application/json",
+//             // Additional headers as required
+//           },
+//         }
+//       );
+
+//       return { paymentUrl: paymentResponse.data.url };
+//     } catch (error) {
+//       console.error("Error creating Vipps payment:", error);
+//       throw new functions.https.HttpsError(
+//         "internal",
+//         "Failed to create Vipps payment"
+//       );
+//     }
+//   });
 exports.chatGPT4 = functions
   .region("europe-west2")
   .https.onCall(async (data, context) => {
