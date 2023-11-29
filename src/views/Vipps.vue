@@ -30,8 +30,8 @@ import { ref } from "vue";
 
 import { createVippsPaymentSession } from "@/js/firebase/index";
 
-const amount = ref();
-const customerNumber = ref("4791234567");
+const amount = ref(100);
+const customerNumber = ref("4796182591");
 const startPayment = async () => {
   console.log("CLICKED");
 

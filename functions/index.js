@@ -4,6 +4,7 @@ const functions = require("firebase-functions");
 const axios = require("axios");
 const express = require("express");
 const bodyParser = require("body-parser");
+const crypto = require("crypto");
 
 // const Vipps = require("@vippsno/vipps-sdk").default;
 
@@ -39,15 +40,40 @@ const { v4: uuidv4 } = require("uuid");
 // );
 
 const app = express();
-app.use(bodyParser.json()); // Support JSON-encoded bodies
+app.use(express.json()); // Support JSON-encoded bodies
 
-app.post("/webhook", (req, res) => {
-  const webhookData = req.body;
-  console.log("Received webhook:", webhookData);
+const secret =
+  "mUCOtdml2jLMtdfk2THhAodQuotF7i2bZdpRIpG79U3MaE+gPHLhJegIvOYCbouZgSvtmEF6FCi6UlaLhtnkTw=="; // Replace with your secret
 
-  // Process the webhook data here
-  // ...
+app.post("/vipps-webhook", (req, res) => {
+  const actualSignature = req.headers["authorization"]; // Extracted from the incoming request
+  const dateTime = req.headers["x-ms-date"];
+  const hashedPayload = crypto
+    .createHash("sha256")
+    .update(JSON.stringify(req.body))
+    .digest("base64");
 
+  const requestUrl = `https://${req.headers.host}${req.originalUrl}`;
+  const url = new URL(requestUrl);
+  const pathAndQuery = url.pathname + url.search;
+  const host = url.host;
+
+  const expectedSignedString = `POST\n${pathAndQuery}\n${dateTime};${host};${hashedPayload}`;
+
+  const expectedSignature = crypto
+    .createHmac("sha256", secret)
+    .update(expectedSignedString)
+    .digest("base64");
+
+  const expectedAuth = `HMAC-SHA256 SignedHeaders=x-ms-date;host;x-ms-content-sha256&Signature=${expectedSignature}`;
+
+  if (expectedAuth !== actualSignature) {
+    console.error("Authorization fields do not match expected value!");
+    res.status(403).send("Unauthorized");
+    return;
+  }
+
+  console.log("Success! Valid webhook request received:", req.body);
   res.status(200).send("Webhook received");
 });
 
