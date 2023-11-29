@@ -1,6 +1,7 @@
 {
   "projects": {
-    "TheBoilerplate": "vue-boilerplate-firebase"
+    "TheBoilerplate": "vue-boilerplate-firebase",
+    "default": "vue-boilerplate-firebase"
   },
   "targets": {},
   "etags": {}

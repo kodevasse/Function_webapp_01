@@ -11,6 +11,12 @@
           type="number"
           placeholder="Amount in øre (10.00 NOK)"
         />
+        <input
+          class="input input-bordered w-full max-w-lg m-4"
+          v-model="customerNumber"
+          type="number"
+          placeholder="telephone number (4791234567)"
+        />
         <div class="card-body">
           <button @click="startPayment">Pay with Vipps</button>
         </div>
@@ -25,10 +31,29 @@ import { ref } from "vue";
 import { createVippsPaymentSession } from "@/js/firebase/index";
 
 const amount = ref();
+const customerNumber = ref("4791234567");
 const startPayment = async () => {
+  console.log("CLICKED");
+
+  //   try {
+  //     const response = await createVippsPaymentSession({
+  //       amount: amount.value, // Amount in øre (10.00 NOK)
+  //       // phoneNumber: "4791234567", // Example phone number
+  //       returnUrl: "http://example.com/redirect",
+  //     });
+  //     console.log("Response from function:", response);
+
+  //     // Handle the response
+  //     // Example: if (response.data.paymentUrl) window.location.href = response.data.paymentUrl;
+  //   } catch (error) {
+  //     console.error("Error initiating payment:", error);
+  //   }
+  // };
+
   try {
     const response = await createVippsPaymentSession({
       amount: amount.value, // Amount in øre (10.00 NOK)
+      customerNumber: customerNumber.value,
       // phoneNumber: "4791234567", // Example phone number
       returnUrl: "http://example.com/redirect",
     });

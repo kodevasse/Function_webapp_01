@@ -51,9 +51,10 @@ app.post("/webhook", (req, res) => {
   res.status(200).send("Webhook received");
 });
 
-exports.vippsWebhook = functions.https.onRequest(app);
-exports.createVippsPaymentSession = functions.https.onCall(
-  async (data, context) => {
+exports.vippsWebhook = functions.region("europe-west2").https.onRequest(app);
+exports.createVippsPaymentSession = functions
+  .region("europe-west2")
+  .https.onCall(async (data, context) => {
     const accessTokenUrl = "https://apitest.vipps.no/accesstoken/get";
     const paymentUrl = "https://apitest.vipps.no/epayment/v1/payments";
     const clientId = "41295971-a331-4527-9baa-d9b838b697c7";
@@ -128,8 +129,7 @@ exports.createVippsPaymentSession = functions.https.onCall(
         error
       );
     }
-  }
-);
+  });
 
 // exports.createVippsPaymentSession = functions
 //   .region("europe-west2")

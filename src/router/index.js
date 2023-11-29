@@ -20,6 +20,7 @@ import Signup from "../views/Signup.vue";
 import VerifyEmail from "../views/VerifyEmail.vue";
 import Dalle from "../views/Dalle.vue";
 import Vipps from "../views/Vipps.vue";
+import Status from "../views/Status.vue";
 
 const routes = [
   {
@@ -92,6 +93,11 @@ const routes = [
     path: "/vipps",
     name: "vipps",
     component: Vipps,
+  },
+  {
+    path: "/status",
+    name: "status",
+    component: Status,
   },
 
   {

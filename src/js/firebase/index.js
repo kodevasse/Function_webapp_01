@@ -3,7 +3,11 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { getFunctions, httpsCallable } from "firebase/functions";
+import {
+  getFunctions,
+  connectFunctionsEmulator,
+  httpsCallable,
+} from "firebase/functions";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -24,7 +28,21 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 const storage = getStorage(app);
+// const functions = getFunctions(app, "europe-west2"); // <-- specify your region here
 const functions = getFunctions(app, "europe-west2"); // <-- specify your region here
+
+// Determine if running locally and connect to emulator
+// Determine if running locally and connect to emulator
+if (window.location.hostname === "localhost") {
+  connectFunctionsEmulator(functions, "127.0.0.1", 5001);
+}
+// connectFunctionsEmulator(functions, "127.0.0.1", 5001);
+else {
+  // In production, specify the region
+  functions.region = "europe-west2";
+}
+
+// Callable functions
 const chatGPT4 = httpsCallable(functions, "chatGPT4");
 const createImageFromText = httpsCallable(functions, "createImageFromText");
 const createVippsPaymentSession = httpsCallable(
