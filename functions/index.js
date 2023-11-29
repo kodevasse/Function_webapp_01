@@ -1,27 +1,59 @@
 const functions = require("firebase-functions");
-const { Configuration, OpenAIApi } = require("openai");
+// const cors = require("cors")({ origin: true });
+// const { Configuration, OpenAIApi } = require("openai");
 const axios = require("axios");
-const Vipps = require("@vippsno/vipps-sdk").default;
+const express = require("express");
+const bodyParser = require("body-parser");
+
+// const Vipps = require("@vippsno/vipps-sdk").default;
 
 const { v4: uuidv4 } = require("uuid");
 
-let apiKey;
-if (process.env.NODE_ENV === "development") {
-  require("dotenv").config();
-  // Your OpenAI API key frrom .env file
-  apiKey = process.env.OPENAI_API_KEY;
-} else {
-  apiKey = functions.config().openai.key;
-}
-const configuration = new Configuration({
-  apiKey: apiKey,
+// let apiKey;
+// if (process.env.NODE_ENV === "development") {
+//   require("dotenv").config();
+//   // Your OpenAI API key frrom .env file
+//   apiKey = process.env.OPENAI_API_KEY;
+// } else {
+//   apiKey = functions.config().openai.key;
+// }
+// const configuration = new Configuration({
+//   apiKey: apiKey,
+// });
+
+// const openai = new OpenAIApi(configuration);
+/// VIPPS
+// exports.createVippsPaymentSession = functions.https.onCall(
+//   async (data, context) => {
+//     try {
+//       console.log("data");
+//     } catch (error) {
+//       console.error(error);
+//       throw new functions.https.HttpsError(
+//         "internal2k3",
+//         "Error message here",
+//         error
+//       );
+//     }
+//   }
+// );
+
+const app = express();
+app.use(bodyParser.json()); // Support JSON-encoded bodies
+
+app.post("/webhook", (req, res) => {
+  const webhookData = req.body;
+  console.log("Received webhook:", webhookData);
+
+  // Process the webhook data here
+  // ...
+
+  res.status(200).send("Webhook received");
 });
 
-const openai = new OpenAIApi(configuration);
-/// VIPPS
-exports.createVippsPaymentSession = functions
-  .region("europe-west2")
-  .https.onCall(async (data, context) => {
+exports.vippsWebhook = functions.https.onRequest(app);
+exports.createVippsPaymentSession = functions.https.onCall(
+  async (data, context) => {
     const accessTokenUrl = "https://apitest.vipps.no/accesstoken/get";
     const paymentUrl = "https://apitest.vipps.no/epayment/v1/payments";
     const clientId = "41295971-a331-4527-9baa-d9b838b697c7";
@@ -43,6 +75,7 @@ exports.createVippsPaymentSession = functions
           },
         }
       );
+
       const accessToken = tokenResponse.data.access_token;
 
       // Step 2: Create Payment
@@ -52,10 +85,25 @@ exports.createVippsPaymentSession = functions
           value: data.amount, // Assuming amount is passed in the request body
           currency: "NOK", // Set your currency
         },
-        reference: "your-unique-reference", // Set your reference
+        paymentMethod: {
+          type: "WALLET",
+        },
+        reference: `txn-${uuidv4()}`, // Set your reference
         userFlow: "WEB_REDIRECT", // Assuming web redirect flow
         // Add other fields as necessary
+        customer: {
+          phoneNumber: data.customerNumber,
+        },
+        paymentDescription: "Testing the Vipps API",
+        // returnUrl: "http://localhost:5173/status",
+        returnUrl: "https://tempapp01.netlify.app/status",
       };
+      // console.log("paymentRequest", paymentRequest);
+      // console.log("accessToken", accessToken);
+      // console.log("idempotencyKey", idempotencyKey);
+      // console.log("subscriptionKey", subscriptionKey);
+      // console.log("merchantSerialNumber", merchantSerialNumber);
+      // console.log("paymentUrl", paymentUrl);
 
       const paymentResponse = await axios.post(paymentUrl, paymentRequest, {
         headers: {
@@ -63,12 +111,15 @@ exports.createVippsPaymentSession = functions
           "Idempotency-Key": idempotencyKey,
           "Ocp-Apim-Subscription-Key": subscriptionKey,
           "Merchant-Serial-Number": merchantSerialNumber,
+          "Content-Type": "application/json",
+
           // Add other headers as necessary
         },
       });
 
       // Send payment response back to the client
-      return { paymentUrl: paymentResponse.data.paymentUrl };
+
+      return { paymentUrl: paymentResponse.data.redirectUrl };
     } catch (error) {
       // Proper error handling for callable functions
       throw new functions.https.HttpsError(
@@ -77,7 +128,9 @@ exports.createVippsPaymentSession = functions
         error
       );
     }
-  });
+  }
+);
+
 // exports.createVippsPaymentSession = functions
 //   .region("europe-west2")
 //   .https.onCall(async (data, context) => {
@@ -175,47 +228,47 @@ exports.createVippsPaymentSession = functions
 //       );
 //     }
 //   });
-exports.chatGPT4 = functions
-  .region("europe-west2")
-  .https.onCall(async (data, context) => {
-    try {
-      // userPrompt and systemMessage are passed from your Vue.js application
-      const { userPrompt, systemMessage } = data;
+// exports.chatGPT4 = functions
+//   .region("europe-west2")
+//   .https.onCall(async (data, context) => {
+//     try {
+//       // userPrompt and systemMessage are passed from your Vue.js application
+//       const { userPrompt, systemMessage } = data;
 
-      // Call the OpenAI API
-      const response = await openai.createChatCompletion({
-        model: "gpt-4",
-        messages: [
-          { role: "system", content: systemMessage },
-          { role: "user", content: userPrompt },
-        ],
-        temperature: 1,
-        max_tokens: 256,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
+//       // Call the OpenAI API
+//       const response = await openai.createChatCompletion({
+//         model: "gpt-4",
+//         messages: [
+//           { role: "system", content: systemMessage },
+//           { role: "user", content: userPrompt },
+//         ],
+//         temperature: 1,
+//         max_tokens: 256,
+//         top_p: 1,
+//         frequency_penalty: 0,
+//         presence_penalty: 0,
+//       });
 
-      return response.data.choices[0].message.content;
-    } catch (error) {
-      console.error(error);
-      throw new functions.https.HttpsError(
-        "internal",
-        "An error occurred while calling the OpenAI API"
-      );
-    }
-  });
-exports.createImageFromText = functions
-  .region("europe-west2")
-  .https.onCall(async (data, context) => {
-    const response = await openai.createImage({
-      prompt: data.prompt,
-      n: data.n || 1,
-      size: data.size || "1024x1024",
-    });
+//       return response.data.choices[0].message.content;
+//     } catch (error) {
+//       console.error(error);
+//       throw new functions.https.HttpsError(
+//         "internal",
+//         "An error occurred while calling the OpenAI API"
+//       );
+//     }
+//   });
+// exports.createImageFromText = functions
+//   .region("europe-west2")
+//   .https.onCall(async (data, context) => {
+//     const response = await openai.createImage({
+//       prompt: data.prompt,
+//       n: data.n || 1,
+//       size: data.size || "1024x1024",
+//     });
 
-    return response.data;
-  });
+//     return response.data;
+//   });
 // exports.createImageFromText = functions
 //   .region("europe-west2")
 //   .https.onCall(async (data, context) => {
